@@ -25,7 +25,7 @@ code {
   border: solid 2px lightgray;
 }
 
-.landing-site {
+.landing-site-title {
   color: black;
   text-align: center;
 }
@@ -66,4 +66,32 @@ code {
   border-radius: 4px;
   left: 90%;
   top: 5%;
+}
+
+.contact-us-form {
+  width: 500px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  margin-left: 300px;
+}
+
+input[type=submit] {
+  margin-left: 300px;
+}
+
+.form-labels {
+  margin-left: 300px;
+}
+
+.form-text {
+  width: 100px;
+  height: 100px;
 }

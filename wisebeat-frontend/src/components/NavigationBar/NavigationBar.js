@@ -6,7 +6,7 @@ const NavigationBar = () => {
     <nav className="navbar navbar-expand-lg  navigation-bar">
        {/* <NavLinks /> */} 
        <h1>LOGO</h1>
-       <button type="button" class="btn btn-default signup-button-navbar">Sign up</button>
+       <button type="button" className="btn btn-default signup-button-navbar">Sign up</button>
     </nav>
   )
 };
