@@ -1,4 +1,5 @@
 body {
+  background-color: white;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -10,4 +11,87 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.app {
+  color: red;
+}
+
+.container {
+  background-color: white;
+  max-width:1196px;
+  height: 750px;
+  margin: 0 auto;
+  border: solid 2px lightgray;
+}
+
+.landing-site-title {
+  color: black;
+  text-align: center;
+}
+
+.navigation-bar {
+  background-color: lightskyblue;
+  display: block;
+  height: 90px;
+  border-bottom: solid 2px lightgray;
+}
+
+.login-button {
+  background-color: lightblue;
+  height: 40px;
+  width: 100px;
+  text-align: center;
+  position: absolute;
+  top: 350px;
+  left: 750px;
+  border-radius: 4px;
+}
+
+.signup-button {
+  height: 40px;
+  width: 100px;
+  text-align: center;
+  position: absolute;
+  top: 350px;
+  left: 1050px;
+  border-radius: 4px;
+}
+
+.signup-button-navbar {
+  height: 40px;
+  width: 100px;
+  text-align: center;
+  position: absolute;
+  border-radius: 4px;
+  left: 90%;
+  top: 5%;
+}
+
+.contact-us-form {
+  width: 500px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  margin-left: 300px;
+}
+
+input[type=submit] {
+  margin-left: 300px;
+}
+
+.form-labels {
+  margin-left: 300px;
+}
+
+.form-text {
+  width: 100px;
+  height: 100px;
 }
