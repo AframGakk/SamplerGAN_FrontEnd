@@ -1,0 +1,12 @@
+.fx-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #282c34;
+
+}
+
+.knob-label {
+    text-align: center;
+}

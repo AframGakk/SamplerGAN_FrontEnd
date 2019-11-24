@@ -6,13 +6,18 @@ import LandingSite from './components/LandingSite/LandingSite';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
-import Studio from './components/Studio/Studio';
 
 const App_old = () => {
   return (
     <div>
       < NavigationBar />
-      < Studio />
+        <div className='container'>
+          <Switch>
+            <Route exact path="/" component={ LandingSite } />
+            <Route exact path='/about' component={ About } />
+            <Route exact path='/contact' component={ Contact } />
+          </Switch>
+        </div>
     </div>
   )
 }

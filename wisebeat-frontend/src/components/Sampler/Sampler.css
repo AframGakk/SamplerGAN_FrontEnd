@@ -1,0 +1,17 @@
+.firstGrid {
+    background-color: #ffffff;
+}
+
+.secondGrid {
+    background-color: #282c34;
+}
+
+.sampler-container {
+    margin-top: auto !important;
+    justify-content: center;
+}
+
+.sampler-comp-wrapper {
+    padding: 10px;
+}
+

@@ -1,0 +1,29 @@
+.sampler-top-section-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    height: 40px;
+    align-items: center;
+
+}
+
+.sampler-top-section-right {
+    display: flex;
+    flex-direction: row;
+}
+
+.sampler-top-section-left {
+    display: flex;
+    flex-direction: row;
+}
+
+.filename-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.right {
+    float: right;
+}
