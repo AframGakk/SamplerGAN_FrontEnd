@@ -2,7 +2,7 @@ import metadata from "../apis/metaService";
 // ACTION CREATOR
 
 // ATH átt að geta tekið inn id og username hérna væri sniðugt til að
-// fá folder og file fyrir userinn sem er að koma inn
+// fá folder og file fyrir userinn sem er að koma inn sjá að neðan
 
 export const fetchFolders = () => async dispatch => {
   const response = await metadata.get("/users/1/folders", {
@@ -26,4 +26,13 @@ export const selectFile = file => {
     type: "FILE_SELECTED",
     payload: file
   };
+};
+
+export const fetchSelectedFileMetadata = fileid => async dispatch => {
+  console.log("Hi er í SelectFile Action Creator");
+  //console.log(`fileid:${fileid}`);
+  const respsone = await metadata.get(`/metadata/${fileid}`, {
+    params: { username: "IvarKristinn" }
+  });
+  dispatch({ type: "FETCH_SELECTED_FILE_METADATA", payload: respsone.data });
 };

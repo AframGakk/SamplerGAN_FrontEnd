@@ -1,6 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchFiles, selectFile } from "../../actions";
+import {
+  fetchFiles,
+  selectFile,
+  fetchSelectedFileMetadata
+} from "../../actions";
 
 import { TreeItem } from "@material-ui/lab";
 
@@ -33,7 +37,13 @@ class TreeFile extends React.Component {
           key={file.id}
           nodeId={file.id}
           label={file.name}
-          onClick={() => this.props.selectFile(file)}
+          onClick={() => {
+            // Calling both functions, onClick block
+            // getting the id of the selected song to get the
+            // metadata for the sampler
+            this.props.selectFile(file);
+            this.props.fetchSelectedFileMetadata(file.id);
+          }}
         />
       );
     });
@@ -64,5 +74,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   // Calling the action creators
   fetchFiles: fetchFiles,
-  selectFile: selectFile
+  selectFile: selectFile,
+  fetchSelectedFileMetadata: fetchSelectedFileMetadata
 })(TreeFile);
