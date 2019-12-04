@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import FileTreeComponent from '../FileTreeComponent/FileTreeComponent';
 import Sampler from '../Sampler/Sampler';
-import AudioEngine from '../../audio-engine/AudioEngine';
+import AudioEngine from '../../AudioEngine/AudioEngine';
 
 class Play extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class Play extends React.Component {
 
         var context = new (window.AudioContext || window.webkitAudioContext)();
         this.engine = new AudioEngine(context);
-        this.engine.init_sound('./KICK.wav');
+        this.engine.init_sound('./bass.wav');
 
     }
 
