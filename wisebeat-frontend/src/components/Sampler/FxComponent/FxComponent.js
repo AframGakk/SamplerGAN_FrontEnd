@@ -1,51 +1,88 @@
 import React from "react";
-import {Grid, Switch} from "@material-ui/core";
-import {Knob} from "react-rotary-knob";
+import { connect } from "react-redux";
+import { Grid, Switch } from "@material-ui/core";
+import { Knob } from "react-rotary-knob";
 import * as skins from "react-rotary-knob-skin-pack";
-import './FxComponent.css';
+import "./FxComponent.css";
+
+import {
+  fxValChanged,
+  reverbValChanged,
+  delayValChanged
+} from "../../../actions";
 
 class FxComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            checkedA: false
-        };
-    }
-
-    changeValue(val) {
-    this.setState({value:val})
+  /*constructor(props) {
+    super(props);
+    this.state = {
+      checkedA: false
+    };
+  }
+*/
+  changeReverbValue(val) {
+    //console.log(val);
+    this.props.reverbValChanged(val);
   }
 
-    handleSwitch() {
+  changeDelayValue(val) {
+    //console.log(val);
+    this.props.delayValChanged(val);
+  }
 
+  handleSwitch = event => {
+    const val = event.target.checked;
+    //console.log(val);
+    this.props.fxValChanged(val);
+  };
 
-    }
+  render() {
+    return (
+      <div>
+        <div>FX</div>
+        <div className={"fx-container"}>
+          <div>
+            <div className={"knob-label"}>On/Off</div>
+            <Switch onChange={this.handleSwitch} />
+          </div>
 
-    render() {
-        return (
-            <div>
-                <div>
-                    FX
-                </div>
-                <div className={'fx-container'}>
-                    <div>
-                        <div className={'knob-label'}>On/Off</div>
-                        <Switch/>
-                    </div>
-
-                    <div>
-                        <div className={'knob-label'}>Reverb</div>
-                        <Knob default={80} skin={skins.s11} onChange={this.changeValue.bind(this)} min={0} max={100} value={this.state.value}/>
-                    </div>
-                    <div>
-                        <div className={'knob-label'}>Delay</div>
-                        <Knob skin={skins.s11} onChange={this.changeValue.bind(this)} min={0} max={100} value={this.state.value}/>
-                    </div>
-                </div>
-            </div>
-
-        );
-    }
+          <div>
+            <div className={"knob-label"}>Reverb</div>
+            <Knob
+              default={this.props.meta.reverb}
+              skin={skins.s11}
+              onChange={this.changeReverbValue.bind(this)}
+              min={0}
+              max={100}
+              value={this.props.meta.reverb}
+            />
+          </div>
+          <div>
+            <div className={"knob-label"}>Delay</div>
+            <Knob
+              default={this.props.meta.delay}
+              skin={skins.s11}
+              onChange={this.changeDelayValue.bind(this)}
+              min={0}
+              max={100}
+              value={this.props.meta.delay}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default FxComponent;
+const mapStateToProps = state => {
+  // Configure connect to tell redux store that we wanna get
+  // the file that is selected in the Filetree
+  //console.log("Inside FXComp mapStateToProps");
+  //console.log(state);
+  return { meta: state.selectedFileMetadata };
+};
+
+export default connect(mapStateToProps, {
+  fxValChanged: fxValChanged,
+  reverbValChanged: reverbValChanged,
+  delayValChanged: delayValChanged
+})(FxComponent);

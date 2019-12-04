@@ -1,75 +1,124 @@
 import React from "react";
-import {Grid, Switch} from "@material-ui/core";
-import {Knob} from "react-rotary-knob";
+import { connect } from "react-redux";
+import { Grid, Switch } from "@material-ui/core";
+import { Knob } from "react-rotary-knob";
 import * as skins from "react-rotary-knob-skin-pack";
-import './EnvelopeComponent.css';
+import "./EnvelopeComponent.css";
+
+import {
+  envelopesValChanged,
+  attackValChanged,
+  holdValChanged,
+  decayValChanged
+} from "../../../actions";
 
 class EnvelopeComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            attackValue: 0,
-            checkedA: false
-        };
-        this.handleDoubleClick.bind(this);
+  /*constructor(props) {
+    super(props);
+    this.state = {
+      attackValue: 0,
+      checkedA: false
+    };
+    this.handleDoubleClick.bind(this);
+  }
+*/
+  // Getting attack knobs value and
+  // sending it into action creator
+  changeAttackValue(val) {
+    //console.log(val);
+    this.props.attackValChanged(val);
+  }
+
+  // Getting hold knobs value and
+  // sending it into action creator
+  changeHoldValue(val) {
+    //console.log(val);
+    this.props.holdValChanged(val);
+  }
+  // Getting decay knobs value and
+  // sending it into action creator
+  changeDecayValue(val) {
+    //console.log(val);
+    this.props.decayValChanged(val);
+  }
+
+  /*handleDoubleClick(label) {
+    if (label === "attack") {
+      this.setState({ attackValue: 0 });
     }
+  }
+  */
 
-    changeAttackValue(val) {
-        this.setState({attackValue:val})
-    }
+  // Getting envelope switch value and
+  // sending it into action creator
+  handleSwitch = event => {
+    const val = event.target.checked;
+    //console.log(val);
+    this.props.envelopesValChanged(val);
+  };
 
-    changeValue(val) {
-        this.setState({attackValue:val})
-    }
+  render() {
+    return (
+      <div>
+        <div>Envelopes</div>
+        <div className={"envelope-container"}>
+          <div>
+            <div className={"knob-label"}>On/Off</div>
+            <Switch onChange={this.handleSwitch} />
+          </div>
 
-    handleDoubleClick(label) {
-        if (label === 'attack') {
-            this.setState({attackValue:0})
-        }
-    }
-
-    handleSwitch() {
-
-
-    }
-
-    render() {
-        return (
-            <div>
-                <div>
-                    Envelopes
-                </div>
-                <div className={'envelope-container'}>
-                    <div>
-                        <div className={'knob-label'}>On/Off</div>
-                        <Switch  />
-                    </div>
-
-                    <div>
-                        <div className={'knob-label'}>Attack</div>
-                        <Knob
-                            default={80}
-                            skin={skins.s11}
-                            onChange={this.changeAttackValue.bind(this)}
-                            min={0}
-                            max={100}
-                            value={this.state.attackValue}
-
-                        />
-                    </div>
-                    <div>
-                        <div className={'knob-label'}>Hold</div>
-                        <Knob skin={skins.s11} onChange={this.changeValue.bind(this)} min={0} max={100} value={this.state.value}/>
-                    </div>
-                    <div>
-                        <div className={'knob-label'}>Deacay</div>
-                        <Knob skin={skins.s11} onChange={this.changeValue.bind(this)} min={0} max={100} value={this.state.value}/>
-                    </div>
-                </div>
-            </div>
-
-        );
-    }
+          <div>
+            <div className={"knob-label"}>Attack</div>
+            <Knob
+              default={this.props.meta.attack}
+              skin={skins.s11}
+              onChange={this.changeAttackValue.bind(this)}
+              min={0}
+              max={100}
+              value={this.props.meta.attack}
+            />
+          </div>
+          <div>
+            <div className={"knob-label"}>Hold</div>
+            <Knob
+              default={this.props.meta.hold}
+              skin={skins.s11}
+              onChange={this.changeHoldValue.bind(this)}
+              min={0}
+              max={100}
+              value={this.props.meta.hold}
+            />
+          </div>
+          <div>
+            <div className={"knob-label"}>Deacay</div>
+            <Knob
+              default={this.props.meta.decay}
+              skin={skins.s11}
+              onChange={this.changeDecayValue.bind(this)}
+              min={0}
+              max={100}
+              value={this.props.meta.decay}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default EnvelopeComponent;
+const mapStateToProps = state => {
+  // Configure connect to tell redux store that we wanna get
+  // the file that is selected in the Filetree
+  //console.log("Inside EnvelopeComp mapStateToProps");
+  //console.log(state);
+  return { meta: state.selectedFileMetadata };
+};
+
+// connect to Provider -> ReduxStore
+export default connect(mapStateToProps, {
+  // Calling the action creators
+  envelopesValChanged: envelopesValChanged,
+  attackValChanged: attackValChanged,
+  holdValChanged: holdValChanged,
+  decayValChanged: decayValChanged
+})(EnvelopeComponent);
