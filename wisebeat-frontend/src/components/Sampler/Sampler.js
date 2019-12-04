@@ -54,12 +54,9 @@ class Sampler extends React.Component {
             color="primary"
             size="medium"
             startIcon={<SaveIcon />}
-            onClick={() => {
-              this.props.updateMetadata(
-                this.props.meta.file_id,
-                this.props.meta
-              );
-            }}
+            onClick={() =>
+              this.props.updateMetadata(this.props.meta.id, this.props.meta)
+            }
           >
             Save
           </Button>
@@ -85,3 +82,10 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   updateMetadata: updateMetadata
 })(Sampler);
+
+/*            onClick={() =>
+              this.props.updateMetadata(
+                this.props.meta.file_id,
+                this.props.meta
+              )
+            } */

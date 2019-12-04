@@ -50,10 +50,10 @@ export const selectFile = file => {
 export const fetchSelectedFileMetadata = fileid => async dispatch => {
   //console.log("Hi er í SelectFile Action Creator");
   //console.log(`fileid:${fileid}`);
-  const respsone = await metadata.get(`/metadata/${fileid}`, {
+  const response = await metadata.get(`/metadata/${fileid}`, {
     params: { username: "IvarKristinn" }
   });
-  dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: respsone.data[0] });
+  dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: response.data[0] });
 };
 
 export const gainValChanged = value => {
@@ -144,14 +144,10 @@ export const delayValChanged = value => {
   };
 };
 
-export const updateMetadata = (fileid, metadata) => async dispatch => {
-  console.log("UPDATING META");
-  console.log(fileid);
-  console.log(metadata);
-  //const response = await metadata.put(`/metadata/${fileid}`, {
-  //params: { username: "IvarKristinn" }
-  //});
+export const updateMetadata = (id, meta) => async dispatch => {
   //console.log("Hi er í FetchFolders Action Creator");
-  //dispatch({ type: UPDATE_METADATA, payload: response });
-  //console.log(response);
+  const response = await metadata.put(`/metadata/${id}`, meta, {
+    params: { username: "IvarKristinn" }
+  });
+  dispatch({ type: UPDATE_METADATA, payload: response.data[0] });
 };

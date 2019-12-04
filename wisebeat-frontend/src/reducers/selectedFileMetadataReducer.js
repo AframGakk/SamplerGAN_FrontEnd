@@ -73,7 +73,7 @@ export default (state = [], action) => {
       //console.log("Delay Updated");
       return { ...state, delay: action.payload };
     case UPDATE_METADATA:
-      console.log("Metadata Updated");
+      //console.log("Metadata Updated");
       return action.payload;
     // if nothing matches return the state as before
     default:
