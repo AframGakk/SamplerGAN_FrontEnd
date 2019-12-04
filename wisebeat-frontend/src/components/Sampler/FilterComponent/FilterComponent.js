@@ -1,51 +1,88 @@
 import React from "react";
-import {Grid, Switch} from "@material-ui/core";
-import {Knob} from "react-rotary-knob";
+import { connect } from "react-redux";
+import { Grid, Switch } from "@material-ui/core";
+import { Knob } from "react-rotary-knob";
 import * as skins from "react-rotary-knob-skin-pack";
-import './FilterComponent.css';
+import "./FilterComponent.css";
+
+import {
+  filtersValChanged,
+  cutoffValChanged,
+  resoValChanged
+} from "../../../actions";
 
 class FilterComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            checkedA: false
-        };
-    }
-
-    changeValue(val) {
-    this.setState({value:val})
+  /*constructor(props) {
+    super(props);
+    this.state = {
+      checkedA: false
+    };
+  }
+*/
+  changeCutoffValue(val) {
+    //console.log(val);
+    this.props.cutoffValChanged(val);
   }
 
-    handleSwitch() {
+  changeResoValue(val) {
+    //console.log(val);
+    this.props.resoValChanged(val);
+  }
 
+  handleSwitch = event => {
+    const val = event.target.checked;
+    //console.log(val);
+    this.props.filtersValChanged(val);
+  };
 
-    }
+  render() {
+    return (
+      <div>
+        <div>Filters</div>
+        <div className={"filter-container"}>
+          <div>
+            <div className={"knob-label"}>On/Off</div>
+            <Switch onChange={this.handleSwitch} />
+          </div>
 
-    render() {
-        return (
-            <div>
-                <div>
-                    Envelopes
-                </div>
-                <div className={'filter-container'}>
-                    <div>
-                        <div className={'knob-label'}>On/Off</div>
-                        <Switch  />
-                    </div>
-
-                    <div>
-                        <div className={'knob-label'}>Cutoff</div>
-                        <Knob default={80} skin={skins.s11} onChange={this.changeValue.bind(this)} min={0} max={100} value={this.state.value}/>
-                    </div>
-                    <div>
-                        <div className={'knob-label'}>Reso.</div>
-                        <Knob skin={skins.s11} onChange={this.changeValue.bind(this)} min={0} max={100} value={this.state.value}/>
-                    </div>
-                </div>
-            </div>
-
-        );
-    }
+          <div>
+            <div className={"knob-label"}>Cutoff</div>
+            <Knob
+              default={this.props.meta.cutoff}
+              skin={skins.s11}
+              onChange={this.changeCutoffValue.bind(this)}
+              min={0}
+              max={100}
+              value={this.props.meta.cutoff}
+            />
+          </div>
+          <div>
+            <div className={"knob-label"}>Reso.</div>
+            <Knob
+              default={this.props.meta.reso}
+              skin={skins.s11}
+              onChange={this.changeResoValue.bind(this)}
+              min={0}
+              max={100}
+              value={this.props.meta.reso}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default FilterComponent;
+const mapStateToProps = state => {
+  // Configure connect to tell redux store that we wanna get
+  // the file that is selected in the Filetree
+  //console.log("Inside FilterComp mapStateToProps");
+  //console.log(state);
+  return { meta: state.selectedFileMetadata };
+};
+
+export default connect(mapStateToProps, {
+  filtersValChanged: filtersValChanged,
+  cutoffValChanged: cutoffValChanged,
+  resoValChanged: resoValChanged
+})(FilterComponent);

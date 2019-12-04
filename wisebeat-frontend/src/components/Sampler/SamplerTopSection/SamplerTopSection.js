@@ -44,7 +44,7 @@ class SamplerTopSection extends React.Component {
           <div className={"filename-container"}>
             {/* Here is the filename and type rendering from the props */}
             <div className={"filename"}>{this.props.file.name}</div>
-            <div className={"filetype"}>{this.props.file.sound_type}</div>
+            {/*<div className={"filetype"}>{this.props.file.sound_type}</div>*/}
           </div>
         </div>
         <div className={"sampler-top-section-right"}>
@@ -87,7 +87,7 @@ class SamplerTopSection extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
+  //console.log(state);
   // Configure connect to tell redux store that we wanna get
   // the file that is selected in the Filetree
   return { file: state.selectedFile };
