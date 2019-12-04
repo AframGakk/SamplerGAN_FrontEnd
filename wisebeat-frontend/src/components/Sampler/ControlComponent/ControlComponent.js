@@ -55,7 +55,7 @@ class ControlComponent extends React.Component {
 
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
-  // the file that is selected in the Filetree
+  // the metadata for what file is selected
   //console.log("Inside ControlComp mapStateToProps");
   //console.log(state);
   return { meta: state.selectedFileMetadata };

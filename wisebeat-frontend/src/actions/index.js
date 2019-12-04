@@ -14,7 +14,8 @@ import {
   RESO_VALUE_CHANGED,
   FX_VALUE_CHANGED,
   REVERB_VALUE_CHANGED,
-  DELAY_VALUE_CHANGED
+  DELAY_VALUE_CHANGED,
+  UPDATE_METADATA
 } from "../actions/types";
 
 // ACTION CREATOR
@@ -141,4 +142,16 @@ export const delayValChanged = value => {
     type: DELAY_VALUE_CHANGED,
     payload: value
   };
+};
+
+export const updateMetadata = (fileid, metadata) => async dispatch => {
+  console.log("UPDATING META");
+  console.log(fileid);
+  console.log(metadata);
+  //const response = await metadata.put(`/metadata/${fileid}`, {
+  //params: { username: "IvarKristinn" }
+  //});
+  //console.log("Hi er í FetchFolders Action Creator");
+  //dispatch({ type: UPDATE_METADATA, payload: response });
+  //console.log(response);
 };

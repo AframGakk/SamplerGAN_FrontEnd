@@ -67,7 +67,7 @@ class TreeFile extends React.Component {
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
   // all the files
-  //console.log(state);
+  console.log(state);
   return { files: state.files };
 };
 // connect to Provider -> ReduxStore

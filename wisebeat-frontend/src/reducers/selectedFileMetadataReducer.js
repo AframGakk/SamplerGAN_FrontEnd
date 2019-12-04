@@ -10,7 +10,8 @@ import {
   RESO_VALUE_CHANGED,
   FX_VALUE_CHANGED,
   REVERB_VALUE_CHANGED,
-  DELAY_VALUE_CHANGED
+  DELAY_VALUE_CHANGED,
+  UPDATE_METADATA
 } from "../actions/types";
 
 const initState = [
@@ -71,6 +72,9 @@ export default (state = [], action) => {
     case DELAY_VALUE_CHANGED:
       //console.log("Delay Updated");
       return { ...state, delay: action.payload };
+    case UPDATE_METADATA:
+      console.log("Metadata Updated");
+      return action.payload;
     // if nothing matches return the state as before
     default:
       return state;
