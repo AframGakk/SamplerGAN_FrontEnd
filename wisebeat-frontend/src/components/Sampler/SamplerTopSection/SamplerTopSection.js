@@ -12,6 +12,7 @@ import PlayArrow from "@material-ui/icons/PlayArrow";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import "./SamplerTopSection.css";
+import AudioEngine from "../../../AudioEngine/AudioEngine";
 
 class SamplerTopSection extends React.Component {
   constructor(props) {
@@ -20,6 +21,11 @@ class SamplerTopSection extends React.Component {
       name: "",
       anchorEl: null
     };
+
+    var context = new (window.AudioContext || window.webkitAudioContext)();
+    this.engine = new AudioEngine(context);
+    this.engine.init_sound('./bass.wav');
+
   }
 
   handleClose = () => {
@@ -30,6 +36,11 @@ class SamplerTopSection extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  onClickPlayHandle = () => {
+        this.engine.play();
+    };
+
+
   render() {
     const ITEM_HEIGHT = 48;
     const open = Boolean(this.state.anchorEl);
@@ -37,7 +48,7 @@ class SamplerTopSection extends React.Component {
     return (
       <div className={"sampler-top-section-container"}>
         <div className={"sampler-top-section-left"}>
-          <IconButton color={"secondary"}>
+          <IconButton onClick={this.onClickPlayHandle} color={"secondary"}>
             <PlayArrow />
           </IconButton>
           <Divider orientation={"vertical"} />
