@@ -14,6 +14,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./SamplerTopSection.css";
 import AudioEngine from "../../../AudioEngine/AudioEngine";
 
+import audiomock from '../../../mockdata/audiomock'
+
 class SamplerTopSection extends React.Component {
   constructor(props) {
     super(props);
@@ -22,11 +24,29 @@ class SamplerTopSection extends React.Component {
       anchorEl: null
     };
 
-    var context = new (window.AudioContext || window.webkitAudioContext)();
-    this.engine = new AudioEngine(context);
-    this.engine.init_sound('./bass.wav');
+    // TODO: Remove hardcoded values
+    this.props.meta.filters = false;
+    this.props.meta.envelopes = false;
+    this.props.meta.fx = false;
 
+    this.props.meta.gain = 100.0;
+    this.props.meta.cutoff = 1000;
+    this.props.meta.attack = 0;
+    this.props.meta.hold = 1;
+    this.props.meta.decay = 0;
+    this.props.meta.reso = 0;
+    this.props.meta.delay = 0;
+    this.props.meta.reverb = 0;
+
+    console.log(audiomock.length);
+
+    this.engine = new AudioEngine();
+    this.engine.init_sound(audiomock);
   }
+
+  changeAudioMeta = (meta) => {
+    this.engine.setMetaValues(meta);
+  };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
@@ -37,7 +57,7 @@ class SamplerTopSection extends React.Component {
   };
 
   onClickPlayHandle = () => {
-        this.engine.play();
+    this.engine.play(this.props.meta);
     };
 
 
@@ -101,7 +121,10 @@ const mapStateToProps = state => {
   //console.log(state);
   // Configure connect to tell redux store that we wanna get
   // the file that is selected in the Filetree
-  return { file: state.selectedFile };
+  return { file: state.selectedFile,
+            meta: state.selectedFileMetadata
+            //meta: this.changeAudioMeta(state.selectedFileMetadata)
+  };
 };
 
 // connect to Provider -> ReduxStore
