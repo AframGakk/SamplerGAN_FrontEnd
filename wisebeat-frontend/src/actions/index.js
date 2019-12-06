@@ -1,4 +1,6 @@
 import metadata from "../apis/metaService";
+import userdata from "../apis/userService";
+import sampledata from "../apis/sampleService";
 import {
   FETCH_FOLDERS,
   FETCH_FILES,
@@ -15,7 +17,9 @@ import {
   FX_VALUE_CHANGED,
   REVERB_VALUE_CHANGED,
   DELAY_VALUE_CHANGED,
-  UPDATE_METADATA
+  UPDATE_METADATA,
+  FETCH_SELECTED_SAMPLE_DATA,
+  CREATE_FOLDER
 } from "../actions/types";
 
 // ACTION CREATOR
@@ -23,6 +27,7 @@ import {
 // ATH átt að geta tekið inn id og username hérna væri sniðugt til að
 // fá folder og file fyrir userinn sem er að koma inn sjá að neðan
 
+//FOLDERS
 export const fetchFolders = () => async dispatch => {
   const response = await metadata.get("/users/1/folders", {
     params: { username: "IvarKristinn" }
@@ -31,6 +36,25 @@ export const fetchFolders = () => async dispatch => {
   dispatch({ type: FETCH_FOLDERS, payload: response.data });
 };
 
+export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
+  // Construction data body for sample service
+  const body = { name: foldern, parent: parId, user: usId, location: loc };
+  //console.log(body);
+
+  // Create the new folder
+  const makefile = await metadata.post(`/users/${usId}/folders`, body, {
+    params: { username: "IvarKristinn" }
+  });
+
+  // Get user new folders
+  const response = await metadata.get(`/users/${usId}/folders`, {
+    params: { username: "IvarKristinn" }
+  });
+  //console.log("Hi er í CREATEFOLDER Action Creator");
+  dispatch({ type: CREATE_FOLDER, payload: response.data });
+};
+
+//FILES
 export const fetchFiles = () => async dispatch => {
   const response = await metadata.get("/users/1/files", {
     params: { username: "IvarKristinn" }
@@ -56,6 +80,7 @@ export const fetchSelectedFileMetadata = fileid => async dispatch => {
   dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: response.data[0] });
 };
 
+//METADATA
 export const gainValChanged = value => {
   //console.log("Hi er í gainValChanged Action Creator");
   return {
@@ -151,3 +176,30 @@ export const updateMetadata = (id, meta) => async dispatch => {
   });
   dispatch({ type: UPDATE_METADATA, payload: response.data[0] });
 };
+
+// SAMPLE
+export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
+  // Getting username
+  const respUser = await userdata.get(`/users/${userId}`, {
+    params: { username: "IvarKristinn" }
+  });
+
+  //console.log(respUser.data);
+  //console.log(respUser.data.userName);
+
+  // Deconstruting the resp and getting user name
+  const bodyUserName = respUser.data.userName;
+
+  // Construction data body for sample service
+  const body = { username: bodyUserName, location: loc };
+
+  console.log(body);
+
+  /*const response = await sampledata.get(`/sample`, body, {
+    params: { username: "IvarKristinn" }
+  });
+  dispatch({ type: FETCH_SELECTED_SAMPLE_DATA, payload: response.data });
+  */
+};
+
+// generate => generate server

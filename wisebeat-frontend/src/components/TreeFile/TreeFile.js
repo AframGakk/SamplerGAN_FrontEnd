@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   fetchFiles,
   selectFile,
-  fetchSelectedFileMetadata
+  fetchSelectedFileMetadata,
+  fetchSelectedSampleData
 } from "../../actions";
 
 import { TreeItem } from "@material-ui/lab";
@@ -43,6 +44,7 @@ class TreeFile extends React.Component {
             // metadata for the sampler
             this.props.selectFile(file);
             this.props.fetchSelectedFileMetadata(file.id);
+            this.props.fetchSelectedSampleData(file.user, file.location);
           }}
         />
       );
@@ -75,5 +77,6 @@ export default connect(mapStateToProps, {
   // Calling the action creators
   fetchFiles: fetchFiles,
   selectFile: selectFile,
-  fetchSelectedFileMetadata: fetchSelectedFileMetadata
+  fetchSelectedFileMetadata: fetchSelectedFileMetadata,
+  fetchSelectedSampleData: fetchSelectedSampleData
 })(TreeFile);
