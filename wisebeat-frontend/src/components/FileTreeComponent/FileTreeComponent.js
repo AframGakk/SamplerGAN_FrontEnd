@@ -8,7 +8,6 @@ import { TreeView, TreeItem } from "@material-ui/lab";
 import TabPanel from "./TabPanel/TabPanel";
 import TreeFile from "../TreeFile/TreeFile";
 import { fetchFolders, createFolder } from "../../actions";
-import FolderModal from "../FolderModal/FolderModal";
 import AddIcon from "@material-ui/icons/Add";
 
 import TextField from "@material-ui/core/TextField";

@@ -1,12 +1,11 @@
 var ctx = null;
 var sound = null;
-var createBuffer = require('audio-buffer-from');
+var createBuffer = require("audio-buffer-from");
 
 class AudioEngine {
-
   constructor() {
     ctx = new (window.AudioContext || window.webkitAudioContext)();
-    this.init_sound('./bass.wav');
+    this.init_sound("./bass.wav");
 
     //ctx = contxt;
     this.source = ctx.createBufferSource();
@@ -29,13 +28,10 @@ class AudioEngine {
     // create filter node
     this.filter = ctx.createBiquadFilter();
     this.filter.frequency.value = 0;
-    this.filter.type = 'allpass';
+    this.filter.type = "allpass";
 
     // delay node
     this.delayNode = ctx.createDelay(this.delayValue);
-
-
-
   }
 
   init_sound(url) {
@@ -65,7 +61,7 @@ class AudioEngine {
     */
 
     var arr = new Float32Array(url);
-    sound = createBuffer(arr, {sampleRate: 16000});
+    sound = createBuffer(arr, { sampleRate: 16000 });
 
     /*
     ctx.decodeAudioData(abuffer, function(buffer) {
@@ -80,46 +76,45 @@ class AudioEngine {
 
   // value [0.0, 1.0]
   setGain(value) {
-
-    value = value/100;
+    value = value / 100;
     console.log(value);
-    this.gainNode.gain.value = value * value // exponential gain sounds nicer
+    this.gainNode.gain.value = value * value; // exponential gain sounds nicer
   }
 
   setMetaValues(meta) {
     console.log(meta);
     this.gainValue = meta.gain;
-  };
-
+  }
 
   play(metadata) {
     console.log(metadata);
     var source = ctx.createBufferSource();
     source.buffer = sound;
-    var sample_len = source.buffer.length/source.buffer.sampleRate;
-
+    var sample_len = source.buffer.length / source.buffer.sampleRate;
 
     // source pipe
-    source.connect(this.gainNode).connect(this.filter).connect(ctx.destination);
+    source
+      .connect(this.gainNode)
+      .connect(this.filter)
+      .connect(ctx.destination);
 
     // gain connect
     //source = source.connect(this.gainNode);
     //this.gainNode.connect(ctx.destination);
-    var gain = metadata.gain/100.0;
-    this.gainNode.gain.value = gain;//this.gainValue;
+    var gain = metadata.gain / 100.0;
+    this.gainNode.gain.value = gain; //this.gainValue;
 
     if (metadata.filters) {
       this.filter.frequency.value = metadata.cutoff;
-      this.filter.type = 'lowpass';
+      this.filter.type = "lowpass";
     } else {
-      this.filter.type = 'allpass';
+      this.filter.type = "allpass";
     }
 
     if (metadata.envelopes) {
-
       //var decayOutput =
       var now = ctx.currentTime;
-      this.gainNode.gain.cancelScheduledValues( now );
+      this.gainNode.gain.cancelScheduledValues(now);
 
       // Attack
       // Anchor beginning of ramp at current value.
@@ -129,7 +124,9 @@ class AudioEngine {
       // Decay
       // Ramp down
       var decayTime = null;
-      ((sample_len - metadata.attack) < metadata.decay) ? decayTime = metadata.attack : decayTime = sample_len - metadata.decay;
+      sample_len - metadata.attack < metadata.decay
+        ? (decayTime = metadata.attack)
+        : (decayTime = sample_len - metadata.decay);
 
       //console.log(sample_len);
 
@@ -157,6 +154,5 @@ class AudioEngine {
     source.start(0);
   }
 }
-
 
 export default AudioEngine;
