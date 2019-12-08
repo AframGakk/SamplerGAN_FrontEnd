@@ -1,16 +1,121 @@
-import React from 'react';
-import ReactDom from 'react-dom';
+import React from "react";
+import ReactDom from "react-dom";
+import { Button } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+
+import "./landingSite.css";
 
 const LandingSite = () => {
-    return (
-        <div>
-            <h1 className="landing-site-title">Landing Site</h1>
-            <div>
-                <button type="button" className="btn btn-primary login-button">Login</button>
-                <button type="button" className="btn btn-default signup-button">Sign up</button>
-            </div>
+  return (
+    <div>
+      <h1 className="landing-site-title">Landing Site</h1>
+      <div>
+        <div className="login">
+          <Button variant="contained" color="primary" size="medium">
+            Login
+          </Button>
         </div>
-    )
+        <div className="signUpFormDiv">
+          <h2 className="signUpFormHeader">Sign Up</h2>
+          <form className="signUpForm">
+            <div>
+              <TextField
+                autoFocus
+                margin="normal"
+                id="username"
+                label="Username"
+                type="text"
+                style={{ margin: 10, width: "520px" }}
+                InputProps={{
+                  style: {
+                    color: "white",
+                    textAlign: "center",
+                    border: "white"
+                  }
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                autoFocus
+                margin="normal"
+                id="firstname"
+                label="First Name"
+                type="text"
+                style={{ margin: 10, width: "520px" }}
+                InputProps={{
+                  style: {
+                    color: "white",
+                    textAlign: "center",
+                    border: "white"
+                  }
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                autoFocus
+                margin="normal"
+                id="lastname"
+                label="Last Name"
+                type="text"
+                style={{ margin: 10, width: "520px" }}
+                InputProps={{
+                  style: {
+                    color: "white",
+                    textAlign: "center",
+                    border: "white"
+                  }
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                autoFocus
+                margin="normal"
+                id="email"
+                label="Email"
+                type="email"
+                style={{ margin: 10, width: "520px" }}
+                InputProps={{
+                  style: {
+                    color: "white",
+                    textAlign: "center",
+                    border: "white"
+                  }
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                autoFocus
+                margin="normal"
+                id="password"
+                label="Password"
+                type="password"
+                style={{ margin: 10, width: "520px" }}
+                InputProps={{
+                  style: {
+                    color: "white",
+                    textAlign: "center",
+                    border: "white"
+                  }
+                }}
+              />
+            </div>
+          </form>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ margin: 10, width: "520px" }}
+          >
+            Sign Up
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default LandingSite;
