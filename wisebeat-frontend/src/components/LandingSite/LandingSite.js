@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { Route } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import { history } from "../../helpers";
 
 import "./landingSite.css";
 
 const LandingSite = () => {
-  let history = useHistory();
   return (
     <div>
       <h1 className="landing-site-title">Landing Site</h1>
@@ -21,7 +20,7 @@ const LandingSite = () => {
             button
             onClick={() => history.push("/login")}
           >
-            > Login
+            Login
           </Button>
         </div>
         <div className="signUpFormDiv">

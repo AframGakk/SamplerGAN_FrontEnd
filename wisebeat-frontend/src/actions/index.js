@@ -2,7 +2,7 @@ import metadata from "../apis/metaService";
 import userdata from "../apis/userService";
 import sampledata from "../apis/sampleService";
 import auth from "../apis/authService";
-import { useHistory } from "react-router-dom";
+import { history } from "../helpers";
 
 import {
   FETCH_FOLDERS,
@@ -211,12 +211,9 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
 // generate => generate server
 
 // USER LOGIN AUTH
-
 export const signIn = (_username, _password) => async dispatch => {
-  //let history = useHistory();
   const body = { username: _username, password: _password };
   console.log(body);
-  /*
   try {
     const response = await auth.post(`/authenticate`, body, {
       params: { username: `${_username}` }
@@ -224,12 +221,14 @@ export const signIn = (_username, _password) => async dispatch => {
     dispatch({ type: AUTHENTICATED });
     localStorage.setItem("user", response.data); // Should not the real username be instead of "user"
     history.push("/studio");
+    //console.log("PUSHING TO STUDIO");
   } catch (error) {
     dispatch({
       type: AUTHENTICATION_ERROR,
-      payload: response.data
+      payload: "Invalid email or password"
+      //response.data
     });
-  }*/
+  }
 };
 
 /*  try {

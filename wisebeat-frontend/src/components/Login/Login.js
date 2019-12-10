@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import { signIn } from "../../actions";
 
 import "./Logis.css";
+import authReducer from "../../reducers/authReducer";
 
 class Login extends React.Component {
   render() {
@@ -82,6 +83,6 @@ const mapStateToProps = state => {
   console.log(state);
 };
 
-export default connect(null, {
+export default connect(mapStateToProps, {
   signIn: signIn
 })(Login);

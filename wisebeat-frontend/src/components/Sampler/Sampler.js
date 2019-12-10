@@ -75,7 +75,7 @@ class Sampler extends React.Component {
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
   // the metadata for what file is selected
-  console.log(state);
+  //console.log(state);
   return { meta: state.selectedFileMetadata };
 };
 // connect to Provider -> ReduxStore
