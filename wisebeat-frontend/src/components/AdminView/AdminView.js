@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import MaterialTable from "material-table";
+//import MaterialTable from "material-table";
 
 import { fetchJobs } from "../../actions";
 
@@ -31,7 +31,8 @@ class AdminView extends React.Component {
   });*/
 
   render() {
-    return (
+    return <div>AdminView</div>;
+    /*return (
       <MaterialTable
         title="Editable Example"
         columns={state.columns}
@@ -75,6 +76,7 @@ class AdminView extends React.Component {
         }}
       />
     );
+    */
   }
 }
 

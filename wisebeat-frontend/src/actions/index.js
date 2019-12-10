@@ -2,6 +2,7 @@ import metadata from "../apis/metaService";
 import userdata from "../apis/userService";
 import sampledata from "../apis/sampleService";
 import auth from "../apis/authService";
+import jobdata from "../apis/adminService";
 import { history } from "../helpers";
 
 import {
@@ -81,7 +82,7 @@ export const selectFile = file => {
 export const fetchSelectedFileMetadata = fileid => async dispatch => {
   //console.log("Hi er í SelectFile Action Creator");
   //console.log(`fileid:${fileid}`);
-  const response = await metadata.get(`/metadata/${fileid}`, {
+  const response = await metadata.get(`/${fileid}`, {
     params: { username: "IvarKristinn" }
   });
   dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: response.data[0] });
@@ -178,7 +179,7 @@ export const delayValChanged = value => {
 
 export const updateMetadata = (id, meta) => async dispatch => {
   //console.log("Hi er í FetchFolders Action Creator");
-  const response = await metadata.put(`/metadata/${id}`, meta, {
+  const response = await metadata.put(`/${id}`, meta, {
     params: { username: "IvarKristinn" }
   });
   dispatch({ type: UPDATE_METADATA, payload: response.data[0] });
@@ -187,7 +188,7 @@ export const updateMetadata = (id, meta) => async dispatch => {
 // SAMPLE
 export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
   // Getting username
-  const respUser = await userdata.get(`/users/${userId}`, {
+  const respUser = await userdata.get(`/${userId}`, {
     params: { username: "IvarKristinn" }
   });
 
@@ -211,7 +212,7 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
 
 // generate => generate server
 
-// USER LOGIN AUTH
+// USER
 export const signIn = (_username, _password) => async dispatch => {
   const body = { username: _username, password: _password };
   console.log(body);
@@ -232,6 +233,25 @@ export const signIn = (_username, _password) => async dispatch => {
   }
 };
 
+export const createUser = () => async dispatch => {
+  // Construction data body for sample service
+  /*const body = {};
+  //console.log(body);
+
+  // Create the new folder
+  const makefile = await metadata.post(`/users/${usId}/folders`, body, {
+    params: { username: "IvarKristinn" }
+  });
+
+  // Get user new folders
+  const response = await metadata.get(`/users/${usId}/folders`, {
+    params: { username: "IvarKristinn" }
+  });
+  //console.log("Hi er í CREATEFOLDER Action Creator");
+  dispatch({ type: CREATE_FOLDER, payload: response.data });
+  */
+};
+
 /*  try {
     const response = await auth.post(`/authenticate`, body, {
       params: { username: `${_username}` }
@@ -248,7 +268,7 @@ export const signIn = (_username, _password) => async dispatch => {
 
 // ADMIN
 export const fetchJobs = () => async dispatch => {
-  const response = await metadata.get("/job");
+  const response = await jobdata.get("/job");
   //console.log("Hi er í fetchJobs Action Creator");
   dispatch({ type: FETCH_JOBS, payload: response.data });
 };
