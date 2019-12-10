@@ -27,7 +27,8 @@ import {
   AUTHENTICATED,
   UNAUTHENTICATED,
   AUTHENTICATION_ERROR,
-  FETCH_JOBS
+  FETCH_JOBS,
+  CREATE_USER
 } from "../actions/types";
 
 // ACTION CREATOR
@@ -223,7 +224,6 @@ export const signIn = (_username, _password) => async dispatch => {
     dispatch({ type: AUTHENTICATED });
     localStorage.setItem("user", response.data); // Should not the real username be instead of "user"
     history.push("/studio");
-    //console.log("PUSHING TO STUDIO");
   } catch (error) {
     dispatch({
       type: AUTHENTICATION_ERROR,
@@ -233,23 +233,31 @@ export const signIn = (_username, _password) => async dispatch => {
   }
 };
 
-export const createUser = () => async dispatch => {
+export const createUser = (
+  _username,
+  _firstname,
+  _lastname,
+  _password,
+  _email
+) => async dispatch => {
   // Construction data body for sample service
-  /*const body = {};
-  //console.log(body);
+  const body = {
+    username: _username,
+    firstname: _firstname,
+    lastname: _lastname,
+    email: _email,
+    password: _password
+  };
+  console.log(body);
 
-  // Create the new folder
-  const makefile = await metadata.post(`/users/${usId}/folders`, body, {
-    params: { username: "IvarKristinn" }
-  });
+  // Create the new user
+  const response = await userdata.post("/", body);
 
-  // Get user new folders
-  const response = await metadata.get(`/users/${usId}/folders`, {
-    params: { username: "IvarKristinn" }
-  });
-  //console.log("Hi er í CREATEFOLDER Action Creator");
-  dispatch({ type: CREATE_FOLDER, payload: response.data });
-  */
+  // logga this new user in ?
+
+  //console.log("Hi er í createUser Action Creator");
+  dispatch({ type: CREATE_USER, payload: response.data });
+  history.push("/login");
 };
 
 /*  try {

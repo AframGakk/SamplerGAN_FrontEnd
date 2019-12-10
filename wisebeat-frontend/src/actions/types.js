@@ -22,3 +22,5 @@ export const UNAUTHENTICATED = "unauthenticated_user";
 export const AUTHENTICATION_ERROR = "authentication_error";
 // admin
 export const FETCH_JOBS = "FECTH_JOBS";
+// user
+export const CREATE_USER = "CREATE_USER";

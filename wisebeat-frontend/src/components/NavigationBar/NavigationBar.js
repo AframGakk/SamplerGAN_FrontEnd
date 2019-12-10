@@ -26,14 +26,13 @@ class NavigationBar extends React.Component {
   render() {
     return (
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#studio">
+        <Navbar.Brand onClick={() => history.push("/studio")}>
           <img
             alt=""
             src="/logo.svg"
             width="30"
             height="30"
             className="d-inline-block align-top"
-            onClick={() => history.push("/studio")}
           />{" "}
           Wisebeat
         </Navbar.Brand>
