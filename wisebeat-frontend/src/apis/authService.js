@@ -1,7 +1,7 @@
 import axios from "axios";
-// API CALL TO METADATA SERVICE
+// API CALL TO AUTH SERVICE
 export default axios.create({
-  baseURL: "http://localhost:5099/api/metadata",
+  baseURL: "http://wisebeatstudio.com/api/auth",
   headers: {
     Authorization:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ikl2YXJLcmlzdGlubiIsIm5iZiI6MTU3NTc0OTA5MiwiZXhwIjoxNTc1NzU1OTkyLCJpYXQiOjE1NzU3NDkwOTJ9.XCr12OCnZax2faegsKsdu3K60gbGdfLyyn_bmnFbSOM",

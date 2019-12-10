@@ -1,18 +1,27 @@
 import React from "react";
 import ReactDom from "react-dom";
+import { Route } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
 import "./landingSite.css";
 
 const LandingSite = () => {
+  let history = useHistory();
   return (
     <div>
       <h1 className="landing-site-title">Landing Site</h1>
       <div>
         <div className="login">
-          <Button variant="contained" color="primary" size="medium">
-            Login
+          <Button
+            variant="contained"
+            color="primary"
+            size="medium"
+            button
+            onClick={() => history.push("/login")}
+          >
+            > Login
           </Button>
         </div>
         <div className="signUpFormDiv">
