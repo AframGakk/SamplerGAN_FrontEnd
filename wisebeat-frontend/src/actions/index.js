@@ -25,7 +25,8 @@ import {
   CREATE_FOLDER,
   AUTHENTICATED,
   UNAUTHENTICATED,
-  AUTHENTICATION_ERROR
+  AUTHENTICATION_ERROR,
+  FETCH_JOBS
 } from "../actions/types";
 
 // ACTION CREATOR
@@ -244,3 +245,10 @@ export const signIn = (_username, _password) => async dispatch => {
       payload: "Invalid email or password"
     });
   } */
+
+// ADMIN
+export const fetchJobs = () => async dispatch => {
+  const response = await metadata.get("/job");
+  //console.log("Hi er í fetchJobs Action Creator");
+  dispatch({ type: FETCH_JOBS, payload: response.data });
+};

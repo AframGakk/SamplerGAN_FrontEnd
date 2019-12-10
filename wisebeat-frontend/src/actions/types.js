@@ -20,3 +20,5 @@ export const CREATE_FOLDER = "CREATE_FOLDER";
 export const AUTHENTICATED = "authenticated_user";
 export const UNAUTHENTICATED = "unauthenticated_user";
 export const AUTHENTICATION_ERROR = "authentication_error";
+// admin
+export const FETCH_JOBS = "FECTH_JOBS";
