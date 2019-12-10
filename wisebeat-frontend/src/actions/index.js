@@ -1,6 +1,9 @@
 import metadata from "../apis/metaService";
 import userdata from "../apis/userService";
 import sampledata from "../apis/sampleService";
+import auth from "../apis/authService";
+import { useHistory } from "react-router-dom";
+
 import {
   FETCH_FOLDERS,
   FETCH_FILES,
@@ -19,7 +22,10 @@ import {
   DELAY_VALUE_CHANGED,
   UPDATE_METADATA,
   FETCH_SELECTED_SAMPLE_DATA,
-  CREATE_FOLDER
+  CREATE_FOLDER,
+  AUTHENTICATED,
+  UNAUTHENTICATED,
+  AUTHENTICATION_ERROR
 } from "../actions/types";
 
 // ACTION CREATOR
@@ -203,3 +209,39 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
 };
 
 // generate => generate server
+
+// USER LOGIN AUTH
+
+export const signIn = (_username, _password) => async dispatch => {
+  //let history = useHistory();
+  const body = { username: _username, password: _password };
+  console.log(body);
+  /*
+  try {
+    const response = await auth.post(`/authenticate`, body, {
+      params: { username: `${_username}` }
+    });
+    dispatch({ type: AUTHENTICATED });
+    localStorage.setItem("user", response.data); // Should not the real username be instead of "user"
+    history.push("/studio");
+  } catch (error) {
+    dispatch({
+      type: AUTHENTICATION_ERROR,
+      payload: response.data
+    });
+  }*/
+};
+
+/*  try {
+    const response = await auth.post(`/authenticate`, body, {
+      params: { username: `${_username}` }
+    });
+    dispatch({ type: AUTHENTICATED });
+    localStorage.setItem("user", response.data.token);
+    history.push("/studio");
+  } catch (error) {
+    dispatch({
+      type: AUTHENTICATION_ERROR,
+      payload: "Invalid email or password"
+    });
+  } */

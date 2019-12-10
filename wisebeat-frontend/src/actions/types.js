@@ -16,3 +16,7 @@ export const DELAY_VALUE_CHANGED = "DELAY_VALUE_CHANGED";
 export const UPDATE_METADATA = "UPDATE_METADATA";
 export const FETCH_SELECTED_SAMPLE_DATA = "FETCH_SELECTED_SAMPLE_DATA";
 export const CREATE_FOLDER = "CREATE_FOLDER";
+// auth
+export const AUTHENTICATED = "authenticated_user";
+export const UNAUTHENTICATED = "unauthenticated_user";
+export const AUTHENTICATION_ERROR = "authentication_error";
