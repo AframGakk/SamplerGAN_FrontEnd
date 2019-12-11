@@ -3,7 +3,7 @@ import axios from "axios";
 export default axios.create({
   baseURL: "http://wisebeatstudio.com/admin/training",
   headers: {
-    Authorization: "asghwegalkjerhghoaier0439845",
+    Authorization: "asghwegalkjerhghoaier0439845!",
     Content_Type: "application/json"
   }
 });

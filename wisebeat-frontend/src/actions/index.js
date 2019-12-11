@@ -218,26 +218,30 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
 
 // USER
 export const signIn = (_username, _password) => async dispatch => {
-  if (_username === "admin" && _password === "admin") {
+  if (
+    new String(_username).valueOf() == new String("admin").valueOf() &&
+    new String(_password).valueOf() == new String("admin").valueOf()
+  ) {
+    console.log("ADMIN");
     history.push("/admin");
-  }
-
-  const body = { username: _username, password: _password };
-  console.log(body);
-  try {
-    const response = await auth.post(`/authenticate`, body, {
-      params: { username: `${_username}` }
-    });
-    dispatch({ type: AUTHENTICATED });
-    localStorage.setItem("jwt", response.data);
-    localStorage.setItem("username", _username);
-    history.push("/studio");
-  } catch (error) {
-    dispatch({
-      type: AUTHENTICATION_ERROR,
-      payload: "Invalid email or password"
-      //response.data
-    });
+  } else {
+    const body = { username: _username, password: _password };
+    console.log(body);
+    try {
+      const response = await auth.post(`/authenticate`, body, {
+        params: { username: `${_username}` }
+      });
+      dispatch({ type: AUTHENTICATED });
+      localStorage.setItem("jwt", response.data);
+      localStorage.setItem("username", _username);
+      history.push("/studio");
+    } catch (error) {
+      dispatch({
+        type: AUTHENTICATION_ERROR,
+        payload: "Invalid email or password"
+        //response.data
+      });
+    }
   }
 };
 
