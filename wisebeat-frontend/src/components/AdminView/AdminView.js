@@ -8,7 +8,7 @@ class AdminView extends React.Component {
   componentDidMount() {
     this.props.fetchJobs();
   }
-  /*const [state, setState] = React.useState({
+    const [state, setState] = React.useState({
     columns: [
       { title: "Name", field: "name" },
       { title: "Surname", field: "surname" },
@@ -28,7 +28,7 @@ class AdminView extends React.Component {
         birthCity: 34
       }
     ]
-  });*/
+  });
 
   render() {
     return <div>AdminView</div>;

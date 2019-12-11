@@ -13,7 +13,7 @@ class NavigationBar extends React.Component {
       return (
         <Typography>
           <Link
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 10, color: "white", cursor: "pointer" }}
             color="primary"
             underline="hover"
             onClick={() => history.push("/studio")}
@@ -21,7 +21,7 @@ class NavigationBar extends React.Component {
             Studio
           </Link>
           <Link
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 10, color: "white", cursor: "pointer" }}
             color="primary"
             underline="hover"
             onClick={() => history.push("/home")}
@@ -29,7 +29,7 @@ class NavigationBar extends React.Component {
             Home
           </Link>
           <Link
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 10, color: "white", cursor: "pointer" }}
             color="primary"
             underline="hover"
             onClick={() => history.push("/about")}
@@ -37,7 +37,7 @@ class NavigationBar extends React.Component {
             About
           </Link>
           <Link
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 10, color: "white", cursor: "pointer" }}
             color="primary"
             underline="hover"
             onClick={() => history.push("/contact")}
@@ -45,7 +45,7 @@ class NavigationBar extends React.Component {
             Contact
           </Link>
           <Link
-            style={{ marginRight: 50 }}
+            style={{ marginRight: 50, color: "white", cursor: "pointer" }}
             color="primary"
             underline="hover"
             onClick={() => this.props.logOut()}
@@ -58,7 +58,7 @@ class NavigationBar extends React.Component {
     return (
       <Typography>
         <Link
-          style={{ marginRight: 10 }}
+          style={{ marginRight: 10, color: "white", cursor: "pointer" }}
           color="primary"
           underline="hover"
           onClick={() => history.push("/login")}
@@ -66,7 +66,7 @@ class NavigationBar extends React.Component {
           Log In
         </Link>
         <Link
-          style={{ marginRight: 10 }}
+          style={{ marginRight: 10, color: "white", cursor: "pointer" }}
           color="primary"
           underline="hover"
           onClick={() => history.push("/")}
@@ -74,7 +74,7 @@ class NavigationBar extends React.Component {
           Sign Up
         </Link>{" "}
         <Link
-          style={{ marginRight: 10 }}
+          style={{ marginRight: 10, color: "white", cursor: "pointer" }}
           color="primary"
           underline="hover"
           onClick={() => history.push("/about")}
@@ -82,7 +82,7 @@ class NavigationBar extends React.Component {
           About
         </Link>
         <Link
-          style={{ marginRight: 10 }}
+          style={{ marginRight: 10, color: "white", cursor: "pointer" }}
           color="primary"
           underline="hover"
           onClick={() => history.push("/contact")}

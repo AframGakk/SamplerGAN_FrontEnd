@@ -80,11 +80,11 @@ class AudioEngine {
   }
 
   play(metadata, sound) {
-    console.log(sound);
-    this.init_sound(sound);
-    var source = this.run_pipe(metadata);
-    source.start(0);
-
+    if (sound != undefined) {
+      this.init_sound(sound);
+      var source = this.run_pipe(metadata);
+      source.start(0);
+    }
   }
 
   download(metadata) {
