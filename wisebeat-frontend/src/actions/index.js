@@ -212,33 +212,22 @@ export const updateMetadata = (id, meta) => async dispatch => {
 
 // SAMPLE
 // ÞEGAR ÞÚ VELUR FÆLINN
-export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
+/*export const fetchSelectedSampleData = loc => async dispatch => {
   let currentUser = localStorage.getItem("username");
   let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
-  // Getting username
-  const respUser = await userdata.get(`/${userId}`, {
-    headers: { Authorization: jwt },
-    params: { username: currentUser }
-  });
-
-  //console.log(respUser.data);
-  //console.log(respUser.data.userName);
-
-  // Deconstruting the resp and getting user name
-  const bodyUserName = respUser.data.userName;
 
   // Construction data body for sample service
   const body = { username: bodyUserName, location: loc };
 
   console.log(body);
 
-  /*const response = await sampledata.get(`/sample`, body, {
+  const response = await sampledata.get(`/sample`, body, {
     params: { username: `${currentUser}` }
   });
   dispatch({ type: FETCH_SELECTED_SAMPLE_DATA, payload: response.data });
-  */
 };
+*/
 
 // Generate new file
 export const fetchGenerateSampleData = () => async dispatch => {
