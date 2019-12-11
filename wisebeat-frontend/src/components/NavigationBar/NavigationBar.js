@@ -24,6 +24,14 @@ class NavigationBar extends React.Component {
             style={{ marginRight: 10 }}
             color="primary"
             underline="hover"
+            onClick={() => history.push("/home")}
+          >
+            Home
+          </Link>
+          <Link
+            style={{ marginRight: 50 }}
+            color="primary"
+            underline="hover"
             onClick={() => this.props.logOut()}
           >
             Sign Out
