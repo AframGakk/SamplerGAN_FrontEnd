@@ -1,8 +1,7 @@
 import axios from "axios";
 //import { authorizationHeader } from "../helpers";
+// API CALL TO AUTH SERVICE
 //let jwt = localStorage.getItem("jwt");
-//console.log(jwt);
-// API CALL TO METADATA SERVICE
 export default axios.create({
-  baseURL: "http://wisebeatstudio.com/api/metadata"
+  baseURL: "http://wisebeatstudio.com/api/auth"
 });

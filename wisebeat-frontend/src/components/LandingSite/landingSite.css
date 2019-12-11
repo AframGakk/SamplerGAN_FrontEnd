@@ -16,9 +16,11 @@
 
 .login {
   float: left;
-  max-width: 500px;
-  max-height: 500px;
-  background-color: lightgray;
+  width: 250px;
+  height: 250px;
+  background-color: 7c7c7c;
+  margin-left: 100px;
+  margin-top: 85px;
 }
 
 .textfield {

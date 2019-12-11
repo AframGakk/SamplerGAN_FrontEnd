@@ -10,7 +10,7 @@ import ControlerComponent from "./ControlComponent/ControlComponent";
 import FxComponent from "./FxComponent/FxComponent";
 import EnvelopeComonent from "./EnvelopeComponent/EnvelopeComponent";
 import FilterComponent from "./FilterComponent/FilterComponent";
-import { updateMetadata } from "../../actions";
+import { updateMetadata, saveGeneratedSampleData } from "../../actions";
 
 class Sampler extends React.Component {
   /*constructor(props) {
@@ -60,6 +60,17 @@ class Sampler extends React.Component {
           >
             Save
           </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="medium"
+            startIcon={<SaveIcon />}
+            onClick={() =>
+              this.props.saveGeneratedSampleData(this.props.newfiledata)
+            }
+          >
+            New file
+          </Button>
         </Grid>
         <Grid item xs={5} className={"secondGrid"}>
           <EnvelopeComonent />
@@ -75,12 +86,16 @@ class Sampler extends React.Component {
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
   // the metadata for what file is selected
-  console.log(state);
-  return { meta: state.selectedFileMetadata };
+  //console.log(state);
+  return {
+    meta: state.selectedFileMetadata,
+    newfiledata: state.selectedFileSoundDataReducer.newFileData
+  };
 };
 // connect to Provider -> ReduxStore
 export default connect(mapStateToProps, {
-  updateMetadata: updateMetadata
+  updateMetadata: updateMetadata,
+  saveGeneratedSampleData: saveGeneratedSampleData
 })(Sampler);
 
 /*            onClick={() =>

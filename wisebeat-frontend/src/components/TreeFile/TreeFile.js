@@ -44,7 +44,7 @@ class TreeFile extends React.Component {
             // metadata for the sampler
             this.props.selectFile(file);
             this.props.fetchSelectedFileMetadata(file.id);
-            this.props.fetchSelectedSampleData(file.user, file.location);
+            this.props.fetchSelectedSampleData(file.location);
           }}
         />
       );

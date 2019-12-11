@@ -4,6 +4,9 @@ import fileReducer from "../reducers/fileReducer";
 import selectedFileReducer from "../reducers/selectedFileReducer";
 import selectedFileMetadataReducer from "../reducers/selectedFileMetadataReducer";
 import selectedFileSoundDataReducer from "../reducers/selectedFileSoundDataReducer";
+import authReducer from "../reducers/authReducer";
+import jobReducer from "../reducers/jobReducer";
+import userReducer from "../reducers/userReducer";
 
 // COMBINE REDUCERS
 
@@ -12,5 +15,8 @@ export default combineReducers({
   files: fileReducer,
   selectedFile: selectedFileReducer,
   selectedFileMetadata: selectedFileMetadataReducer,
-  selectedFileSoundDataReducer: selectedFileSoundDataReducer
+  selectedFileSoundDataReducer: selectedFileSoundDataReducer,
+  authReducer: authReducer,
+  jobReducer: jobReducer,
+  userReducer: userReducer
 });
