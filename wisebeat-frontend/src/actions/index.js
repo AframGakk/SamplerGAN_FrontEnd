@@ -5,7 +5,6 @@ import auth from "../apis/authService";
 import jobdata from "../apis/adminService";
 import generate from "../apis/generatorService";
 import { history } from "../helpers";
-
 import {
   FETCH_FOLDERS,
   FETCH_FILES,
@@ -33,10 +32,12 @@ import {
   USER_LOGOUT,
   GET_CURRENT_USER,
   GENERATE_NEW_FILE,
-  SAVE_THE_NEWLY_GENERATED_FILE
+  SAVE_THE_NEWLY_GENERATED_FILE,
+  DELAY_VALUE_CHANGED
 } from "../actions/types";
 
 // ACTION CREATOR
+
 
 //FOLDERS
 export const fetchFolders = () => async dispatch => {
@@ -51,6 +52,7 @@ export const fetchFolders = () => async dispatch => {
   //console.log("Hi er í FetchFolders Action Creator");
   dispatch({ type: FETCH_FOLDERS, payload: response.data });
 };
+
 
 export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
   let currentUser = localStorage.getItem("username");
@@ -110,6 +112,15 @@ export const fetchSelectedFileMetadata = fileid => async dispatch => {
 };
 
 //METADATA
+  //console.log("Hi er í SelectFile Action Creator");
+  //console.log(`fileid:${fileid}`);
+  const respsone = await metadata.get(`/metadata/${fileid}`, {
+    params: { username: "IvarKristinn" }
+  });
+  dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: respsone.data[0] });
+};
+
+
 export const gainValChanged = value => {
   //console.log("Hi er í gainValChanged Action Creator");
   return {

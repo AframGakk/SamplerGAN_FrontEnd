@@ -18,14 +18,10 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 class FileTreeComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: "",
-      open: false,
-      setOpen: false
-    };
+  componentDidMount() {
+    this.props.fetchFolders();
   }
+
 
   renderFolderList() {
     // Here is where the FoldeTree is rendering and
@@ -47,7 +43,7 @@ class FileTreeComponent extends React.Component {
 
   handleChangeIndex = index => {
     this.setState(index);
-    //console.log("handleChangeIndex");
+    console.log("handleChangeIndex");
   };
 
   // Clicking featured objects
@@ -64,6 +60,14 @@ class FileTreeComponent extends React.Component {
   clickedClose = () => {
     console.log("Loka!");
     this.setState({ open: false });
+  };
+    console.log("handleChange");
+  };
+
+  // Clicking featured objects
+  handleChipClick = () => {
+    console.info("You clicked the Chip.");
+    console.log("handleChipClick");
   };
 
   render() {

@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-
 import "./SamplerTopSection.css";
 import AudioEngine from "../../../AudioEngine/AudioEngine";
 
@@ -25,6 +24,7 @@ class SamplerTopSection extends React.Component {
       name: "",
       anchorEl: null
     };
+  }
 
     // TODO: Remove hardcoded values
     this.props.meta.filters = false;
