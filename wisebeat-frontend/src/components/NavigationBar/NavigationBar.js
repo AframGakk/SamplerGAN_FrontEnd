@@ -5,20 +5,58 @@ import { history } from "../../helpers";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 
+import { logOut } from "../../actions";
+
 class NavigationBar extends React.Component {
   navbarLinks() {
     if (this.props.authenticated) {
       return (
         <Typography>
-          <Link onClick={() => history.push("/studio")}>Studio</Link>
-          <Link>Sign Out</Link>
+          <Link
+            style={{ marginRight: 10 }}
+            color="primary"
+            underline="hover"
+            onClick={() => history.push("/studio")}
+          >
+            Studio
+          </Link>
+          <Link
+            style={{ marginRight: 10 }}
+            color="primary"
+            underline="hover"
+            onClick={() => history.push("/home")}
+          >
+            Home
+          </Link>
+          <Link
+            style={{ marginRight: 50 }}
+            color="primary"
+            underline="hover"
+            onClick={() => this.props.logOut()}
+          >
+            Sign Out
+          </Link>
         </Typography>
       );
     }
     return (
       <Typography>
-        <Link onClick={() => history.push("/login")}>Log In</Link>
-        <Link onClick={() => history.push("/")}>Sign Up</Link>
+        <Link
+          style={{ marginRight: 10 }}
+          color="primary"
+          underline="hover"
+          onClick={() => history.push("/login")}
+        >
+          Log In
+        </Link>
+        <Link
+          style={{ marginRight: 10 }}
+          color="primary"
+          underline="hover"
+          onClick={() => history.push("/")}
+        >
+          Sign Up
+        </Link>
       </Typography>
     );
   }
@@ -26,7 +64,7 @@ class NavigationBar extends React.Component {
   render() {
     return (
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand onClick={() => history.push("/studio")}>
+        <Navbar.Brand>
           <img
             alt=""
             src="/logo.svg"
@@ -36,7 +74,7 @@ class NavigationBar extends React.Component {
           />{" "}
           Wisebeat
         </Navbar.Brand>
-        <ul>{this.navbarLinks()}</ul>
+        {this.navbarLinks()}
       </Navbar>
     );
   }
@@ -48,7 +86,9 @@ const mapStateToProps = state => {
   return { authenticated: state.authReducer.authenticated };
 };
 
-export default connect(mapStateToProps)(NavigationBar);
+export default connect(mapStateToProps, {
+  logOut: logOut
+})(NavigationBar);
 
 /*
 

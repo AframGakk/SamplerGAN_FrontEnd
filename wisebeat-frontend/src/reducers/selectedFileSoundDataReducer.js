@@ -1,4 +1,8 @@
-import { FETCH_SELECTED_SAMPLE_DATA } from "../actions/types";
+import {
+  FETCH_SELECTED_SAMPLE_DATA,
+  GENERATE_NEW_FILE,
+  SAVE_THE_NEWLY_GENERATED_FILE
+} from "../actions/types";
 
 export default (state = [], action) => {
   switch (action.type) {
@@ -6,8 +10,12 @@ export default (state = [], action) => {
     case FETCH_SELECTED_SAMPLE_DATA:
       //console.log("Hi er í SelectFileReducer");
       return action.payload;
+    case GENERATE_NEW_FILE:
+      return { ...state, newFileData: action.payload.data };
     // if nothing matches return the state as before
     default:
       return state;
   }
 };
+
+//return { ...state, newFileData: action.payload };

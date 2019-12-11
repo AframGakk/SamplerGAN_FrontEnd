@@ -24,17 +24,7 @@ class AudioEngine {
     this.frequencyValue = 1000;
     this.delayValue = 1.0;
 
-    // gain node create
-    this.gainNode = ctx.createGain();
-    this.gainNode.gain.value = 1.0;
 
-    // create filter node
-    this.filter = ctx.createBiquadFilter();
-    this.filter.frequency.value = 0;
-    this.filter.type = "allpass";
-
-    // delay node
-    this.delayNode = ctx.createDelay(this.delayValue);
   }
 
   init_sound(url) {
@@ -89,8 +79,11 @@ class AudioEngine {
     this.gainValue = meta.gain;
   }
 
-  play(metadata) {
+  play(metadata, sound) {
+    console.log(sound);
+    this.init_sound(sound);
     var source = this.run_pipe(metadata);
+    source.start(0);
 
   }
 
@@ -111,17 +104,29 @@ class AudioEngine {
     source.buffer = sound;
     var sample_len = source.buffer.length / source.buffer.sampleRate;
 
+    // gain node create
+    this.gainNode = ctx.createGain();
+    this.gainNode.gain.value = metadata.gain / 100.0; //this.gainValue;
+
+    // create filter node
+    this.filter = ctx.createBiquadFilter();
+    this.filter.frequency.value = 0;
+    this.filter.type = "allpass";
+
+    // delay node
+    this.delayNode = ctx.createDelay(this.delayValue);
+
+
+
+
     // source pipe
     source
       .connect(this.gainNode)
       .connect(this.filter)
+        .connect(this.delayNode)
       .connect(ctx.destination);
 
-    // gain connect
-    //source = source.connect(this.gainNode);
-    //this.gainNode.connect(ctx.destination);
-    var gain = metadata.gain / 100.0;
-    this.gainNode.gain.value = gain; //this.gainValue;
+
 
     if (metadata.filters) {
       this.filter.Q.value = metadata.reso;
@@ -148,20 +153,7 @@ class AudioEngine {
 
       this.gainNode.gain.setTargetAtTime(0, now + decayTime, hold);
 
-      // Attack
-      // Anchor beginning of ramp at current value.
-      // Ramp up
-      this.gainNode.gain.linearRampToValueAtTime(gain, now + attack);
-
-
-      // Hold
-      //now = ctx.currentTime;
-      //this.gainNode.gain.linearRampToValueAtTime(gain, now + (sample_len - decayTime));
-
-      // Decay
-      // Ramp down
-
-      //this.gainNode.gain.linearRampToValueAtTime(0, sample_len);
+      this.gainNode.gain.linearRampToValueAtTime(this.gainNode.gain.value, now + attack);
 
     }
 
@@ -172,6 +164,7 @@ class AudioEngine {
       feedback.gain.value = 0.4;
       this.delayNode.connect(feedback);
       feedback.connect(this.delayNode);
+      this.source.connect(this.delayNode);
     } else {
       this.delayNode.value = 0;
     }

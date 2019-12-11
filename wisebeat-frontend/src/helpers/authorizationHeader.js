@@ -1,10 +1,10 @@
 export function authorizationHeader() {
   // return authorization header with jwt token
-  const user = localStorage.getItem("user");
+  const jwt = localStorage.getItem("jwt");
 
   //console.log(user);
-  if (user) {
-    return { Authorization: user };
+  if (jwt) {
+    return { Authorization: jwt };
   } else {
     return {};
   }

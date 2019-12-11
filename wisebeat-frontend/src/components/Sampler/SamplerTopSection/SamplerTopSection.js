@@ -15,7 +15,9 @@ import "./SamplerTopSection.css";
 import AudioEngine from "../../../AudioEngine/AudioEngine";
 import Recorder from 'recorder-js';
 
-import audiomock from '../../../mockdata/audiomock'
+import audiomock from "../../../mockdata/audiomock";
+
+import { fetchGenerateSampleData } from "../../../actions/";
 
 class SamplerTopSection extends React.Component {
   constructor(props) {
@@ -39,11 +41,9 @@ class SamplerTopSection extends React.Component {
     this.props.meta.delay = 0;
     this.props.meta.reverb = 0;
 
-    console.log(audiomock.length);
-
     this.engine = new AudioEngine();
-    this.engine.init_sound(audiomock);
   }
+
 
   changeAudioMeta = (meta) => {
     this.engine.setMetaValues(meta);
@@ -58,7 +58,7 @@ class SamplerTopSection extends React.Component {
   };
 
   onClickPlayHandle = () => {
-    this.engine.play(this.props.meta);
+    this.engine.play(this.props.meta, this.props.newFileData);
     };
 
   onDownloadClick = () => {
@@ -114,7 +114,11 @@ class SamplerTopSection extends React.Component {
             </MenuItem>
           </Menu>
           <Divider orientation={"vertical"} />
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => this.props.fetchGenerateSampleData()}
+          >
             Secondary
           </Button>
         </div>
@@ -127,11 +131,15 @@ const mapStateToProps = state => {
   //console.log(state);
   // Configure connect to tell redux store that we wanna get
   // the file that is selected in the Filetree
-  return { file: state.selectedFile,
-            meta: state.selectedFileMetadata
-            //meta: this.changeAudioMeta(state.selectedFileMetadata)
+  return {
+    file: state.selectedFile,
+    meta: state.selectedFileMetadata,
+    newFileData: state.selectedFileSoundDataReducer.newFileData
+    //meta: this.changeAudioMeta(state.selectedFileMetadata)
   };
 };
 
 // connect to Provider -> ReduxStore
-export default connect(mapStateToProps)(SamplerTopSection);
+export default connect(mapStateToProps, {
+  fetchGenerateSampleData: fetchGenerateSampleData
+})(SamplerTopSection);
