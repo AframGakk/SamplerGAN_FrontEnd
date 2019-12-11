@@ -29,6 +29,22 @@ class NavigationBar extends React.Component {
             Home
           </Link>
           <Link
+            style={{ marginRight: 10 }}
+            color="primary"
+            underline="hover"
+            onClick={() => history.push("/about")}
+          >
+            About
+          </Link>
+          <Link
+            style={{ marginRight: 10 }}
+            color="primary"
+            underline="hover"
+            onClick={() => history.push("/contact")}
+          >
+            Contact
+          </Link>
+          <Link
             style={{ marginRight: 50 }}
             color="primary"
             underline="hover"
@@ -56,6 +72,22 @@ class NavigationBar extends React.Component {
           onClick={() => history.push("/")}
         >
           Sign Up
+        </Link>{" "}
+        <Link
+          style={{ marginRight: 10 }}
+          color="primary"
+          underline="hover"
+          onClick={() => history.push("/about")}
+        >
+          About
+        </Link>
+        <Link
+          style={{ marginRight: 10 }}
+          color="primary"
+          underline="hover"
+          onClick={() => history.push("/contact")}
+        >
+          Contact
         </Link>
       </Typography>
     );
