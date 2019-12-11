@@ -5,6 +5,7 @@ import auth from "../apis/authService";
 import jobdata from "../apis/adminService";
 import generate from "../apis/generatorService";
 import { history } from "../helpers";
+import { AsyncStorage } from "AsyncStorage";
 
 import {
   FETCH_FOLDERS,
@@ -37,31 +38,38 @@ import {
 
 // ACTION CREATOR
 
-const currentUser = localStorage.getItem("username");
-const currentUserId = localStorage.getItem("userid");
-
 //FOLDERS
 export const fetchFolders = () => async dispatch => {
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
+
   const response = await metadata.get(`/users/${currentUserId}/folders`, {
-    params: { username: `${currentUser}` }
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
   });
   //console.log("Hi er í FetchFolders Action Creator");
   dispatch({ type: FETCH_FOLDERS, payload: response.data });
 };
 
 export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
   // Construction data body for sample service
   const body = { name: foldern, parent: parId, user: usId, location: loc };
   //console.log(body);
 
   // Create the new folder
   const makefile = await metadata.post(`/users/${usId}/folders`, body, {
-    params: { username: `${currentUser}` }
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
   });
 
   // Get user new folders
   const response = await metadata.get(`/users/${usId}/folders`, {
-    params: { username: `${currentUser}` }
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
   });
   //console.log("Hi er í CREATEFOLDER Action Creator");
   dispatch({ type: CREATE_FOLDER, payload: response.data });
@@ -69,8 +77,12 @@ export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
 
 //FILES
 export const fetchFiles = () => async dispatch => {
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
   const response = await metadata.get(`/users/${currentUserId}/files`, {
-    params: { username: `${currentUser}` }
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
   });
   //console.log("Hi er í FetchFiles Action Creator");
   dispatch({ type: FETCH_FILES, payload: response.data });
@@ -85,10 +97,14 @@ export const selectFile = file => {
 };
 
 export const fetchSelectedFileMetadata = fileid => async dispatch => {
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
   //console.log("Hi er í SelectFile Action Creator");
   //console.log(`fileid:${fileid}`);
   const response = await metadata.get(`/${fileid}`, {
-    params: { username: `${currentUser}` }
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
   });
   dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: response.data[0] });
 };
@@ -183,18 +199,26 @@ export const delayValChanged = value => {
 };
 
 export const updateMetadata = (id, meta) => async dispatch => {
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
   //console.log("Hi er í FetchFolders Action Creator");
   const response = await metadata.put(`/${id}`, meta, {
-    params: { username: `${currentUser}` }
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
   });
   dispatch({ type: UPDATE_METADATA, payload: response.data[0] });
 };
 
 // SAMPLE
 export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
   // Getting username
   const respUser = await userdata.get(`/${userId}`, {
-    params: { username: `${currentUser}` }
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
   });
 
   //console.log(respUser.data);
@@ -217,16 +241,22 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
 
 // generate => generate server
 export const fetchGenerateSampleData = () => async dispatch => {
-  const kick = "KICK";
-  const body = {
-    username: currentUser,
-    label: kick
-  };
-  console.log(body);
-  const response = await generate.post("/generator", JSON.stringify(body));
-  console.log("Hi er í FetchFolders Action Creator");
-  console.log(response);
-  //dispatch({ type: GENERATE_NEW_FILE, payload: response.data });
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
+  const response = await generate.post(
+    "/generator",
+    {
+      username: currentUser,
+      label: "KICK"
+    },
+    {
+      headers: { Authorization: jwt }
+    }
+  );
+  //console.log("Hi er í FetchFolders Action Creator");
+  //console.log(response.data);
+  dispatch({ type: GENERATE_NEW_FILE, payload: response.data });
 };
 
 // USER
@@ -249,9 +279,12 @@ export const signIn = (_username, _password) => async dispatch => {
         params: { username: `${_username}` }
       });
 
-      localStorage.setItem("jwt", response.data);
-      localStorage.setItem("username", _username);
-      localStorage.setItem("userid", userId.data);
+      setTimeout(function() {
+        localStorage.setItem("jwt", response.data);
+        localStorage.setItem("username", _username);
+        localStorage.setItem("userid", userId.data);
+      }, 1500);
+
       dispatch({ type: AUTHENTICATED });
       // Was loading too fast, an was resulting in that the variables were returning null
       history.push("/studio");
