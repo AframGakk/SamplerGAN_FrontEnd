@@ -17,6 +17,7 @@ export const UPDATE_METADATA = "UPDATE_METADATA";
 export const FETCH_SELECTED_SAMPLE_DATA = "FETCH_SELECTED_SAMPLE_DATA";
 export const CREATE_FOLDER = "CREATE_FOLDER";
 export const GENERATE_NEW_FILE = "GENERATE_NEW_FILE";
+export const SAVE_THE_NEWLY_GENERATED_FILE = "SAVE_THE_NEWLY_GENERATED_FILE";
 // auth
 export const AUTHENTICATED = "authenticated_user";
 export const UNAUTHENTICATED = "unauthenticated_user";

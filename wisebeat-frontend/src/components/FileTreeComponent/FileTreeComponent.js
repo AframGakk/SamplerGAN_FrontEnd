@@ -126,17 +126,6 @@ class FileTreeComponent extends React.Component {
                   <TextField
                     autoFocus
                     margin="dense"
-                    id="user"
-                    label="User Id"
-                    type="number"
-                    fullWidth
-                    inputRef={ref => {
-                      this.userRef = ref;
-                    }}
-                  />
-                  <TextField
-                    autoFocus
-                    margin="dense"
                     id="location"
                     label="Location"
                     type="text"
@@ -156,7 +145,7 @@ class FileTreeComponent extends React.Component {
                       this.props.createFolder(
                         this.foldernRef.value,
                         this.parentRef.value,
-                        this.userRef.value,
+                        localStorage.getItem("userid"),
                         this.locRef.value
                       );
                     }}

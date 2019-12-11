@@ -5,7 +5,6 @@ import auth from "../apis/authService";
 import jobdata from "../apis/adminService";
 import generate from "../apis/generatorService";
 import { history } from "../helpers";
-import { AsyncStorage } from "AsyncStorage";
 
 import {
   FETCH_FOLDERS,
@@ -33,7 +32,8 @@ import {
   CREATE_USER,
   USER_LOGOUT,
   GET_CURRENT_USER,
-  GENERATE_NEW_FILE
+  GENERATE_NEW_FILE,
+  SAVE_THE_NEWLY_GENERATED_FILE
 } from "../actions/types";
 
 // ACTION CREATOR
@@ -239,7 +239,7 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
   */
 };
 
-// generate => generate server
+// Generate new file
 export const fetchGenerateSampleData = () => async dispatch => {
   let currentUser = localStorage.getItem("username");
   let currentUserId = localStorage.getItem("userid");
@@ -256,7 +256,30 @@ export const fetchGenerateSampleData = () => async dispatch => {
   );
   //console.log("Hi er í FetchFolders Action Creator");
   //console.log(response.data);
-  dispatch({ type: GENERATE_NEW_FILE, payload: response.data });
+  dispatch({ type: GENERATE_NEW_FILE, payload: response["data"] });
+};
+// Save the newly generated file
+// þarf að fá inn sample arrayinn sjálfann hingað inn, svo save takinn þarf að hafa aðgang
+// að selectedFileSoundDataReducer
+export const saveGeneratedSampleData = () => async dispatch => {
+  //SAVE_THE_NEWLY_GENERATED_FILE
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
+  const response = await sampledata.post(
+    "/generator",
+    {
+      username: currentUser,
+      location: "KICK",
+      data: 1111
+    },
+    {
+      headers: { Authorization: jwt }
+    }
+  );
+  //console.log("Hi er í FetchFolders Action Creator");
+  //console.log(response.data);
+  dispatch({ type: SAVE_THE_NEWLY_GENERATED_FILE, payload: response.data });
 };
 
 // USER
