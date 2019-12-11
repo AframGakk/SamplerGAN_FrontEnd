@@ -16,6 +16,7 @@ export const DELAY_VALUE_CHANGED = "DELAY_VALUE_CHANGED";
 export const UPDATE_METADATA = "UPDATE_METADATA";
 export const FETCH_SELECTED_SAMPLE_DATA = "FETCH_SELECTED_SAMPLE_DATA";
 export const CREATE_FOLDER = "CREATE_FOLDER";
+export const GENERATE_NEW_FILE = "GENERATE_NEW_FILE";
 // auth
 export const AUTHENTICATED = "authenticated_user";
 export const UNAUTHENTICATED = "unauthenticated_user";
@@ -23,6 +24,7 @@ export const AUTHENTICATION_ERROR = "authentication_error";
 export const USER_LOGOUT = "USER_LOGOUT";
 // admin
 export const FETCH_JOBS = "FECTH_JOBS";
+export const POST_NEW_GENERATOR_MODEL = "POST_NEW_GENERATOR_MODEL";
 // user
 export const CREATE_USER = "CREATE_USER";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";

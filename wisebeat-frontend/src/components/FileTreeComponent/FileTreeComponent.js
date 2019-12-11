@@ -18,10 +18,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 class FileTreeComponent extends React.Component {
-  componentDidMount() {
-    this.props.fetchFolders();
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -80,7 +76,7 @@ class FileTreeComponent extends React.Component {
           onChange={this.handleChange}
           centered
         >
-          <Tab label="My Library" />
+          <Tab label="My Library" onClick={() => this.props.fetchFolders()} />
           <Tab label="Featured" />
         </Tabs>
         <TabPanel value={this.state.value} index={0}>

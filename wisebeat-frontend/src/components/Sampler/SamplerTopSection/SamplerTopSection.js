@@ -14,7 +14,9 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./SamplerTopSection.css";
 import AudioEngine from "../../../AudioEngine/AudioEngine";
 
-import audiomock from '../../../mockdata/audiomock'
+import audiomock from "../../../mockdata/audiomock";
+
+import { fetchGenerateSampleData } from "../../../actions/";
 
 class SamplerTopSection extends React.Component {
   constructor(props) {
@@ -44,7 +46,7 @@ class SamplerTopSection extends React.Component {
     this.engine.init_sound(audiomock);
   }
 
-  changeAudioMeta = (meta) => {
+  changeAudioMeta = meta => {
     this.engine.setMetaValues(meta);
   };
 
@@ -58,8 +60,7 @@ class SamplerTopSection extends React.Component {
 
   onClickPlayHandle = () => {
     this.engine.play(this.props.meta);
-    };
-
+  };
 
   render() {
     const ITEM_HEIGHT = 48;
@@ -108,7 +109,11 @@ class SamplerTopSection extends React.Component {
             </MenuItem>
           </Menu>
           <Divider orientation={"vertical"} />
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => this.props.fetchGenerateSampleData()}
+          >
             Secondary
           </Button>
         </div>
@@ -121,11 +126,14 @@ const mapStateToProps = state => {
   //console.log(state);
   // Configure connect to tell redux store that we wanna get
   // the file that is selected in the Filetree
-  return { file: state.selectedFile,
-            meta: state.selectedFileMetadata
-            //meta: this.changeAudioMeta(state.selectedFileMetadata)
+  return {
+    file: state.selectedFile,
+    meta: state.selectedFileMetadata
+    //meta: this.changeAudioMeta(state.selectedFileMetadata)
   };
 };
 
 // connect to Provider -> ReduxStore
-export default connect(mapStateToProps)(SamplerTopSection);
+export default connect(mapStateToProps, {
+  fetchGenerateSampleData: fetchGenerateSampleData
+})(SamplerTopSection);

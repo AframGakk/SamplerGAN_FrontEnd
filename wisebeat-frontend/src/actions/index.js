@@ -3,6 +3,7 @@ import userdata from "../apis/userService";
 import sampledata from "../apis/sampleService";
 import auth from "../apis/authService";
 import jobdata from "../apis/adminService";
+import generate from "../apis/generatorService";
 import { history } from "../helpers";
 
 import {
@@ -29,19 +30,19 @@ import {
   AUTHENTICATION_ERROR,
   FETCH_JOBS,
   CREATE_USER,
-  USER_LOGOUT
+  USER_LOGOUT,
+  GET_CURRENT_USER,
+  GENERATE_NEW_FILE
 } from "../actions/types";
 
 // ACTION CREATOR
 
-// ATH átt að geta tekið inn id og username hérna væri sniðugt til að
-// fá folder og file fyrir userinn sem er að koma inn sjá að neðan
-
 const currentUser = localStorage.getItem("username");
+const currentUserId = localStorage.getItem("userid");
 
 //FOLDERS
 export const fetchFolders = () => async dispatch => {
-  const response = await metadata.get("/users/1/folders", {
+  const response = await metadata.get(`/users/${currentUserId}/folders`, {
     params: { username: `${currentUser}` }
   });
   //console.log("Hi er í FetchFolders Action Creator");
@@ -68,7 +69,7 @@ export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
 
 //FILES
 export const fetchFiles = () => async dispatch => {
-  const response = await metadata.get("/users/1/files", {
+  const response = await metadata.get(`/users/${currentUserId}/files`, {
     params: { username: `${currentUser}` }
   });
   //console.log("Hi er í FetchFiles Action Creator");
@@ -215,6 +216,18 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
 };
 
 // generate => generate server
+export const fetchGenerateSampleData = () => async dispatch => {
+  const kick = "KICK";
+  const body = {
+    username: currentUser,
+    label: kick
+  };
+  console.log(body);
+  const response = await generate.post("/generator", JSON.stringify(body));
+  console.log("Hi er í FetchFolders Action Creator");
+  console.log(response);
+  //dispatch({ type: GENERATE_NEW_FILE, payload: response.data });
+};
 
 // USER
 export const signIn = (_username, _password) => async dispatch => {
@@ -231,9 +244,16 @@ export const signIn = (_username, _password) => async dispatch => {
       const response = await auth.post(`/authenticate`, body, {
         params: { username: `${_username}` }
       });
-      dispatch({ type: AUTHENTICATED });
+
+      const userId = await userdata.get("/username", {
+        params: { username: `${_username}` }
+      });
+
       localStorage.setItem("jwt", response.data);
       localStorage.setItem("username", _username);
+      localStorage.setItem("userid", userId.data);
+      dispatch({ type: AUTHENTICATED });
+      // Was loading too fast, an was resulting in that the variables were returning null
       history.push("/studio");
     } catch (error) {
       dispatch({
