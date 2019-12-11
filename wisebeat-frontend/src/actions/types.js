@@ -20,7 +20,9 @@ export const CREATE_FOLDER = "CREATE_FOLDER";
 export const AUTHENTICATED = "authenticated_user";
 export const UNAUTHENTICATED = "unauthenticated_user";
 export const AUTHENTICATION_ERROR = "authentication_error";
+export const USER_LOGOUT = "USER_LOGOUT";
 // admin
 export const FETCH_JOBS = "FECTH_JOBS";
 // user
 export const CREATE_USER = "CREATE_USER";
+export const GET_CURRENT_USER = "GET_CURRENT_USER";

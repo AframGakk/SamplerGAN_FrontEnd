@@ -1,7 +1,8 @@
 import {
   AUTHENTICATED,
   UNAUTHENTICATED,
-  AUTHENTICATION_ERROR
+  AUTHENTICATION_ERROR,
+  USER_LOGOUT
 } from "../actions/types";
 // AUTH REDUCER
 
@@ -18,6 +19,8 @@ export default (state = {}, action) => {
     case AUTHENTICATION_ERROR:
       return { ...state, error: action.payload };
     // if nothing matches return the state as before
+    case USER_LOGOUT:
+      return {};
     default:
       return state;
   }

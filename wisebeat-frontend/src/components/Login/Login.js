@@ -5,9 +5,7 @@ import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
 import { signIn } from "../../actions";
-
 import "./Logis.css";
-import authReducer from "../../reducers/authReducer";
 
 class Login extends React.Component {
   render() {

@@ -28,7 +28,8 @@ import {
   UNAUTHENTICATED,
   AUTHENTICATION_ERROR,
   FETCH_JOBS,
-  CREATE_USER
+  CREATE_USER,
+  USER_LOGOUT
 } from "../actions/types";
 
 // ACTION CREATOR
@@ -231,6 +232,16 @@ export const signIn = (_username, _password) => async dispatch => {
       //response.data
     });
   }
+};
+
+export const logOut = () => {
+  console.log("Hi er í logOut Action Creator");
+  // remove user from local storage to log user out
+  localStorage.removeItem("user");
+  history.push("/login");
+  return {
+    type: USER_LOGOUT
+  };
 };
 
 export const createUser = (
