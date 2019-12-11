@@ -211,6 +211,7 @@ export const updateMetadata = (id, meta) => async dispatch => {
 };
 
 // SAMPLE
+// ÞEGAR ÞÚ VELUR FÆLINN
 export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
   let currentUser = localStorage.getItem("username");
   let currentUserId = localStorage.getItem("userid");
@@ -261,17 +262,33 @@ export const fetchGenerateSampleData = () => async dispatch => {
 // Save the newly generated file
 // þarf að fá inn sample arrayinn sjálfann hingað inn, svo save takinn þarf að hafa aðgang
 // að selectedFileSoundDataReducer
-export const saveGeneratedSampleData = () => async dispatch => {
+export const saveGeneratedSampleData = _data => async dispatch => {
   //SAVE_THE_NEWLY_GENERATED_FILE
   let currentUser = localStorage.getItem("username");
   let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
+  console.log(_data);
+
+  const body = {
+    Name: "NewFile",
+    Sound_type: 1,
+    Location: `${currentUserId}/middleheavy/NewFile.wav`,
+    Parent: 8
+  };
+
+  const resp = await metadata.post(`/users/${currentUserId}/files`, body, {
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
+  });
+
+  console.log(resp);
+
   const response = await sampledata.post(
-    "/generator",
+    "/sample",
     {
       username: currentUser,
-      location: "KICK",
-      data: 1111
+      location: `${currentUserId}/middleheavy/NewFile.wav`,
+      data: _data
     },
     {
       headers: { Authorization: jwt }

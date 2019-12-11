@@ -114,7 +114,7 @@ class SamplerTopSection extends React.Component {
             color="secondary"
             onClick={() => this.props.fetchGenerateSampleData()}
           >
-            Secondary
+            Generate file
           </Button>
         </div>
       </div>

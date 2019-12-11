@@ -12,6 +12,9 @@ export default (state = [], action) => {
       return action.payload;
     case GENERATE_NEW_FILE:
       return { ...state, newFileData: action.payload.data };
+    case SAVE_THE_NEWLY_GENERATED_FILE:
+      return action.payload;
+
     // if nothing matches return the state as before
     default:
       return state;
