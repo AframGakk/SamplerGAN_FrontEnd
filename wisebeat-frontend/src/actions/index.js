@@ -37,10 +37,12 @@ import {
 // ATH átt að geta tekið inn id og username hérna væri sniðugt til að
 // fá folder og file fyrir userinn sem er að koma inn sjá að neðan
 
+const currentUser = localStorage.getItem("username");
+
 //FOLDERS
 export const fetchFolders = () => async dispatch => {
   const response = await metadata.get("/users/1/folders", {
-    params: { username: "IvarKristinn" }
+    params: { username: `${currentUser}` }
   });
   //console.log("Hi er í FetchFolders Action Creator");
   dispatch({ type: FETCH_FOLDERS, payload: response.data });
@@ -53,12 +55,12 @@ export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
 
   // Create the new folder
   const makefile = await metadata.post(`/users/${usId}/folders`, body, {
-    params: { username: "IvarKristinn" }
+    params: { username: `${currentUser}` }
   });
 
   // Get user new folders
   const response = await metadata.get(`/users/${usId}/folders`, {
-    params: { username: "IvarKristinn" }
+    params: { username: `${currentUser}` }
   });
   //console.log("Hi er í CREATEFOLDER Action Creator");
   dispatch({ type: CREATE_FOLDER, payload: response.data });
@@ -67,7 +69,7 @@ export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
 //FILES
 export const fetchFiles = () => async dispatch => {
   const response = await metadata.get("/users/1/files", {
-    params: { username: "IvarKristinn" }
+    params: { username: `${currentUser}` }
   });
   //console.log("Hi er í FetchFiles Action Creator");
   dispatch({ type: FETCH_FILES, payload: response.data });
@@ -85,7 +87,7 @@ export const fetchSelectedFileMetadata = fileid => async dispatch => {
   //console.log("Hi er í SelectFile Action Creator");
   //console.log(`fileid:${fileid}`);
   const response = await metadata.get(`/${fileid}`, {
-    params: { username: "IvarKristinn" }
+    params: { username: `${currentUser}` }
   });
   dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: response.data[0] });
 };
@@ -182,7 +184,7 @@ export const delayValChanged = value => {
 export const updateMetadata = (id, meta) => async dispatch => {
   //console.log("Hi er í FetchFolders Action Creator");
   const response = await metadata.put(`/${id}`, meta, {
-    params: { username: "IvarKristinn" }
+    params: { username: `${currentUser}` }
   });
   dispatch({ type: UPDATE_METADATA, payload: response.data[0] });
 };
@@ -191,7 +193,7 @@ export const updateMetadata = (id, meta) => async dispatch => {
 export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
   // Getting username
   const respUser = await userdata.get(`/${userId}`, {
-    params: { username: "IvarKristinn" }
+    params: { username: `${currentUser}` }
   });
 
   //console.log(respUser.data);
@@ -206,7 +208,7 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
   console.log(body);
 
   /*const response = await sampledata.get(`/sample`, body, {
-    params: { username: "IvarKristinn" }
+    params: { username: `${currentUser}` }
   });
   dispatch({ type: FETCH_SELECTED_SAMPLE_DATA, payload: response.data });
   */
@@ -216,6 +218,10 @@ export const fetchSelectedSampleData = (userId, loc) => async dispatch => {
 
 // USER
 export const signIn = (_username, _password) => async dispatch => {
+  if (_username === "admin" && _password === "admin") {
+    history.push("/admin");
+  }
+
   const body = { username: _username, password: _password };
   console.log(body);
   try {
@@ -223,7 +229,8 @@ export const signIn = (_username, _password) => async dispatch => {
       params: { username: `${_username}` }
     });
     dispatch({ type: AUTHENTICATED });
-    localStorage.setItem("user", response.data); // Should not the real username be instead of "user"
+    localStorage.setItem("jwt", response.data);
+    localStorage.setItem("username", _username);
     history.push("/studio");
   } catch (error) {
     dispatch({
@@ -235,9 +242,9 @@ export const signIn = (_username, _password) => async dispatch => {
 };
 
 export const logOut = () => {
-  console.log("Hi er í logOut Action Creator");
+  //console.log("Hi er í logOut Action Creator");
   // remove user from local storage to log user out
-  localStorage.removeItem("user");
+  localStorage.clear();
   history.push("/login");
   return {
     type: USER_LOGOUT
@@ -270,20 +277,6 @@ export const createUser = (
   dispatch({ type: CREATE_USER, payload: response.data });
   history.push("/login");
 };
-
-/*  try {
-    const response = await auth.post(`/authenticate`, body, {
-      params: { username: `${_username}` }
-    });
-    dispatch({ type: AUTHENTICATED });
-    localStorage.setItem("user", response.data.token);
-    history.push("/studio");
-  } catch (error) {
-    dispatch({
-      type: AUTHENTICATION_ERROR,
-      payload: "Invalid email or password"
-    });
-  } */
 
 // ADMIN
 export const fetchJobs = () => async dispatch => {

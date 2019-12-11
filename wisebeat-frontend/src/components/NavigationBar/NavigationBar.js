@@ -14,7 +14,6 @@ class NavigationBar extends React.Component {
         <Typography>
           <Link
             style={{ marginRight: 10 }}
-            href="#"
             color="primary"
             underline="hover"
             onClick={() => history.push("/studio")}
@@ -23,7 +22,6 @@ class NavigationBar extends React.Component {
           </Link>
           <Link
             style={{ marginRight: 10 }}
-            href="#"
             color="primary"
             underline="hover"
             onClick={() => this.props.logOut()}
@@ -37,7 +35,6 @@ class NavigationBar extends React.Component {
       <Typography>
         <Link
           style={{ marginRight: 10 }}
-          href="#"
           color="primary"
           underline="hover"
           onClick={() => history.push("/login")}
@@ -46,7 +43,6 @@ class NavigationBar extends React.Component {
         </Link>
         <Link
           style={{ marginRight: 10 }}
-          href="#"
           color="primary"
           underline="hover"
           onClick={() => history.push("/")}
@@ -60,7 +56,7 @@ class NavigationBar extends React.Component {
   render() {
     return (
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand onClick={() => history.push("/studio")}>
+        <Navbar.Brand>
           <img
             alt=""
             src="/logo.svg"
