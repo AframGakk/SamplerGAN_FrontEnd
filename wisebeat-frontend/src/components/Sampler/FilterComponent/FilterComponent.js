@@ -52,7 +52,7 @@ class FilterComponent extends React.Component {
               skin={skins.s11}
               onChange={this.changeCutoffValue.bind(this)}
               min={0}
-              max={100}
+              max={10000}
               value={this.props.meta.cutoff}
             />
           </div>

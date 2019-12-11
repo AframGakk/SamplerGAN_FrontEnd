@@ -13,6 +13,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import "./SamplerTopSection.css";
 import AudioEngine from "../../../AudioEngine/AudioEngine";
+import Recorder from 'recorder-js';
 
 import audiomock from '../../../mockdata/audiomock'
 
@@ -60,6 +61,11 @@ class SamplerTopSection extends React.Component {
     this.engine.play(this.props.meta);
     };
 
+  onDownloadClick = () => {
+
+    this.engine.download(this.props.meta);
+  };
+
 
   render() {
     const ITEM_HEIGHT = 48;
@@ -100,8 +106,8 @@ class SamplerTopSection extends React.Component {
               }
             }}
           >
-            <MenuItem key={"value1"} onClick={this.handleClose}>
-              Value1
+            <MenuItem key={"value1"} onClick={this.onDownloadClick}>
+              Download
             </MenuItem>
             <MenuItem key={"value2"} onClick={this.handleClose}>
               Value2

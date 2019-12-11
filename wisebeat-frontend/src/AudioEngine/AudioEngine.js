@@ -1,6 +1,9 @@
 var ctx = null;
 var sound = null;
 var createBuffer = require("audio-buffer-from");
+var toWav = require('audiobuffer-to-wav');
+var Recorder = require('recorder-js');
+
 
 class AudioEngine {
   constructor() {
@@ -87,7 +90,23 @@ class AudioEngine {
   }
 
   play(metadata) {
-    console.log(metadata);
+    var source = this.run_pipe(metadata);
+
+  }
+
+  download(metadata) {
+    var source = this.run_pipe(metadata);
+
+    var wav = toWav(source.buffer);
+    const element = document.createElement("a");
+    const file = new Blob([new DataView(wav), {type: 'audio/wav'}]);
+    element.href = URL.createObjectURL(file);
+    element.download = "output.wav";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+
+  run_pipe(metadata) {
     var source = ctx.createBufferSource();
     source.buffer = sound;
     var sample_len = source.buffer.length / source.buffer.sampleRate;
@@ -105,6 +124,7 @@ class AudioEngine {
     this.gainNode.gain.value = gain; //this.gainValue;
 
     if (metadata.filters) {
+      this.filter.Q.value = metadata.reso;
       this.filter.frequency.value = metadata.cutoff;
       this.filter.type = "lowpass";
     } else {
@@ -114,25 +134,35 @@ class AudioEngine {
     if (metadata.envelopes) {
       //var decayOutput =
       var now = ctx.currentTime;
+      var attack = metadata.attack / 100;
+      var decay = metadata.decay / 100;
+      var hold = metadata.hold / 100;
+      var decayTime = null;
+      sample_len - attack < decay
+          ? (decayTime = attack)
+          : (decayTime = sample_len - decay);
+
+
       this.gainNode.gain.cancelScheduledValues(now);
+      this.gainNode.gain.setValueAtTime(0, now);
+
+      this.gainNode.gain.setTargetAtTime(0, now + decayTime, hold);
 
       // Attack
       // Anchor beginning of ramp at current value.
-      this.gainNode.gain.setValueAtTime(0, now);
       // Ramp up
-      this.gainNode.gain.linearRampToValueAtTime(gain, now + metadata.attack);
+      this.gainNode.gain.linearRampToValueAtTime(gain, now + attack);
+
+
+      // Hold
+      //now = ctx.currentTime;
+      //this.gainNode.gain.linearRampToValueAtTime(gain, now + (sample_len - decayTime));
+
       // Decay
       // Ramp down
-      var decayTime = null;
-      sample_len - metadata.attack < metadata.decay
-        ? (decayTime = metadata.attack)
-        : (decayTime = sample_len - metadata.decay);
 
-      //console.log(sample_len);
+      //this.gainNode.gain.linearRampToValueAtTime(0, sample_len);
 
-      //console.log(decayTime);
-
-      this.gainNode.gain.linearRampToValueAtTime(0, decayTime);
     }
 
     if (metadata.fx) {
@@ -151,7 +181,7 @@ class AudioEngine {
     //source.connect(ctx.destination);
 
     // start audio
-    source.start(0);
+    return source;
   }
 }
 
