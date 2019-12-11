@@ -1,6 +1,9 @@
 import axios from "axios";
 //import { authorizationHeader } from "../helpers";
-// API CALL TO USER SERVICE
+// API CALL TO SAMPLE SERVICE
 export default axios.create({
-  baseURL: "http://wisebeatstudio.com/api/users"
+  baseURL: "http://35.235.51.11:5020/api"
 });
+
+//api/sample
+//api/sample/exists

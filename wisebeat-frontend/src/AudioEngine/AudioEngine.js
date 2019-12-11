@@ -1,11 +1,13 @@
 var ctx = null;
 var sound = null;
-
+var createBuffer = require("audio-buffer-from");
 
 class AudioEngine {
+  constructor() {
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    this.init_sound("./bass.wav");
 
-  constructor(contxt) {
-    ctx = contxt;
+    //ctx = contxt;
     this.source = ctx.createBufferSource();
 
     this.envelope = false;
@@ -23,9 +25,17 @@ class AudioEngine {
     this.gainNode = ctx.createGain();
     this.gainNode.gain.value = 1.0;
 
+    // create filter node
+    this.filter = ctx.createBiquadFilter();
+    this.filter.frequency.value = 0;
+    this.filter.type = "allpass";
+
+    // delay node
+    this.delayNode = ctx.createDelay(this.delayValue);
   }
 
   init_sound(url) {
+    /*
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
     request.responseType = 'arraybuffer';
@@ -40,64 +50,104 @@ class AudioEngine {
       });
     };
     request.send();
+    */
+    //sound = url;
+
+    /*
+    sound = arrayToAudioBuffer({
+      context: ctx,
+      data: url
+    });
+    */
+
+    var arr = new Float32Array(url);
+    sound = createBuffer(arr, { sampleRate: 16000 });
+
+    /*
+    ctx.decodeAudioData(abuffer, function(buffer) {
+        sound = buffer;
+      }, function (err) {
+        console.log('Error decoding audio');
+        console.log(err);
+      });
+
+     */
   }
 
   // value [0.0, 1.0]
   setGain(value) {
-    this.gainNode.gain.value = value * value // exponential gain sounds nicer
+    value = value / 100;
+    console.log(value);
+    this.gainNode.gain.value = value * value; // exponential gain sounds nicer
   }
 
+  setMetaValues(meta) {
+    console.log(meta);
+    this.gainValue = meta.gain;
+  }
 
-  play() {
+  play(metadata) {
+    console.log(metadata);
     var source = ctx.createBufferSource();
     source.buffer = sound;
-    var sample_len = source.buffer.length/source.buffer.sampleRate;
+    var sample_len = source.buffer.length / source.buffer.sampleRate;
+
+    // source pipe
+    source
+      .connect(this.gainNode)
+      .connect(this.filter)
+      .connect(ctx.destination);
 
     // gain connect
-    source.connect(this.gainNode);
-    this.gainNode.connect(ctx.destination);
-    this.gainNode.gain.value = this.gainValue;
+    //source = source.connect(this.gainNode);
+    //this.gainNode.connect(ctx.destination);
+    var gain = metadata.gain / 100.0;
+    this.gainNode.gain.value = gain; //this.gainValue;
 
-    if (this.envelope) {
+    if (metadata.filters) {
+      this.filter.frequency.value = metadata.cutoff;
+      this.filter.type = "lowpass";
+    } else {
+      this.filter.type = "allpass";
+    }
 
+    if (metadata.envelopes) {
       //var decayOutput =
       var now = ctx.currentTime;
-      this.gainNode.gain.cancelScheduledValues( now );
+      this.gainNode.gain.cancelScheduledValues(now);
 
       // Attack
       // Anchor beginning of ramp at current value.
       this.gainNode.gain.setValueAtTime(0, now);
       // Ramp up
-      this.gainNode.gain.linearRampToValueAtTime(this.holdValue, now + this.attackTime);
+      this.gainNode.gain.linearRampToValueAtTime(gain, now + metadata.attack);
       // Decay
       // Ramp down
       var decayTime = null;
-      ((sample_len - this.attackTime) < this.decayValue) ? decayTime = this.attackTime : decayTime = sample_len - this.decayValue;
+      sample_len - metadata.attack < metadata.decay
+        ? (decayTime = metadata.attack)
+        : (decayTime = sample_len - metadata.decay);
 
+      //console.log(sample_len);
 
-      console.log(decayTime);
+      //console.log(decayTime);
 
       this.gainNode.gain.linearRampToValueAtTime(0, decayTime);
     }
 
-    if (this.filter) {
-      var filter = ctx.createBiquadFilter();
-      filter.frequency.value = this.frequencyValue;
-      filter.type = 'lowpass';
-      // filter connect
-      source.connect(filter);
-      this.filter.connect(ctx.destination);
-    }
-
-    if (this.fx) {
+    if (metadata.fx) {
       // delay node
-      var delayNode = ctx.createDelay(this.delayValue);
-      // delay connect
-      source.connect(delayNode);
-      delayNode.connect(ctx.destination);
+      //var delayNode = ctx.createDelay(this.delayValue);
+      var feedback = ctx.createGain();
+      feedback.gain.value = 0.4;
+      this.delayNode.connect(feedback);
+      feedback.connect(this.delayNode);
+    } else {
+      this.delayNode.value = 0;
     }
 
     //main connect
+    //source.connect(this.gainNode);
     //source.connect(ctx.destination);
 
     // start audio

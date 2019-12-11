@@ -1,0 +1,28 @@
+.signUpFormDiv {
+  float: right;
+  width: 550px;
+  height: 550px;
+  background-color: rgba(55, 71, 79, 1);
+  margin-right: 100px;
+  margin-top: 85px;
+}
+
+.signUpFormHeader {
+  margin-left: 10px;
+  margin-top: 10px;
+  color: white;
+  text-align: center;
+}
+
+.login {
+  float: left;
+  width: 250px;
+  height: 250px;
+  background-color: 7c7c7c;
+  margin-left: 100px;
+  margin-top: 85px;
+}
+
+.textfield {
+  color: white;
+}
