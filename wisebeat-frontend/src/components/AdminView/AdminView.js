@@ -40,6 +40,10 @@ const useStyles = theme => ({
 });
 
 class AdminView extends React.Component {
+  componentDidMount() {
+    this.props.fetchJobs();
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +89,11 @@ class AdminView extends React.Component {
     const { classes } = this.props;
     //console.log(jobs);
 
-    return jobs.map(job => {
+    const sortedJobs = jobs.sort(function(a, b) {
+      return a.id - b.id;
+    });
+
+    return sortedJobs.map(job => {
       return (
         <TableRow key={job.id} className={classes.row}>
           <TableCell component="th" scope="row">
