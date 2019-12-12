@@ -6,10 +6,7 @@ import { history } from "../../helpers";
 const Admin = () => {
   return (
     <div>
-      Job View
-      <div>
-        <AdminView />
-      </div>
+      <AdminView />
     </div>
   );
 };

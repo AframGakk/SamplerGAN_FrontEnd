@@ -33,7 +33,9 @@ import {
   GET_CURRENT_USER,
   GENERATE_NEW_FILE,
   SAVE_THE_NEWLY_GENERATED_FILE,
-  POST_NEW_GENERATOR_MODEL
+  POST_NEW_GENERATOR_MODEL,
+  POST_NEW_JOB,
+  UPDATE_USER
 } from "../actions/types";
 
 // ACTION CREATOR
@@ -342,7 +344,7 @@ export const createUser = (
   _password,
   _email
 ) => async dispatch => {
-  // Construction data body for sample service
+  // Construction data body for user service
   const body = {
     username: _username,
     firstname: _firstname,
@@ -355,18 +357,103 @@ export const createUser = (
   // Create the new user
   const response = await userdata.post("/", body);
 
-  // logga this new user in ?
-
+  // logga this new user in
+  dispatch(signIn(_username, _password));
   //console.log("Hi er í createUser Action Creator");
   dispatch({ type: CREATE_USER, payload: response.data });
-  history.push("/login");
+};
+
+export const updateUser = (
+  _firstname,
+  _lastname,
+  _password,
+  _email
+) => async dispatch => {
+  let currentUser = localStorage.getItem("username");
+  let currentUserId = localStorage.getItem("userid");
+  let jwt = localStorage.getItem("jwt");
+  const body = {
+    firstname: _firstname,
+    lastname: _lastname,
+    email: _email,
+    password: _password
+  };
+  console.log(body);
+
+  const response = await userdata.patch("/", body, {
+    headers: { Authorization: jwt },
+    params: { username: currentUser }
+  });
+
+  dispatch({ type: UPDATE_USER, payload: response.data });
 };
 
 // ADMIN
+// Fetch all jobs
 export const fetchJobs = () => async dispatch => {
   const response = await jobdata.get("/job", {
     headers: { Authorization: "asghwegalkjerhghoaier0439845!" }
   });
   //console.log("Hi er í fetchJobs Action Creator");
   dispatch({ type: FETCH_JOBS, payload: response.data });
+};
+
+// Create new job
+export const createJob = (
+  _label,
+  _version,
+  _batchsize,
+  _learningrate,
+  _adambeta,
+  _lreluaalpha,
+  _ep,
+  _description
+) => async dispatch => {
+  /*const body = {
+    label: _label,
+    version: Number(_version),
+    sound_type: 1,
+    parameters: {
+      batch_size: Number(_batchsize),
+      adam_learning_rate: Number(_learningrate),
+      adam_beta: Number(_adambeta),
+      lrelu_alpha: Number(_lreluaalpha),
+      episodes: Number(_ep)
+    },
+    description: _description
+  };
+
+  console.log(body);*/
+
+  const response = await jobdata.post(
+    "/job",
+    {
+      label: _label,
+      version: Number(_version),
+      sound_type: 1,
+      parameters: {
+        batch_size: Number(_batchsize),
+        adam_learning_rate: Number(_learningrate),
+        adam_beta: Number(_adambeta),
+        lrelu_alpha: Number(_lreluaalpha),
+        episodes: Number(_ep)
+      },
+      description: _description
+    },
+    {
+      headers: { Authorization: "asghwegalkjerhghoaier0439845!" }
+    }
+  );
+
+  console.log("Hi er í createJob Action Creator");
+  dispatch({ type: POST_NEW_JOB, payload: response.data });
+};
+
+// Update model
+export const createNewGeneratorModel = _location => async dispatch => {
+  console.log(_location);
+  const response = await generate.post("/generator/version", {
+    location: `${_location}`
+  });
+  dispatch({ type: POST_NEW_GENERATOR_MODEL, payload: response });
 };

@@ -25,7 +25,10 @@ export const AUTHENTICATION_ERROR = "authentication_error";
 export const USER_LOGOUT = "USER_LOGOUT";
 // admin
 export const FETCH_JOBS = "FECTH_JOBS";
+export const POST_NEW_JOB = "POST_NEW_JOB";
 export const POST_NEW_GENERATOR_MODEL = "CREATE_NEW_GENERATOR_MODEL";
+
 // user
 export const CREATE_USER = "CREATE_USER";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
+export const UPDATE_USER = "UPDATE_USER";

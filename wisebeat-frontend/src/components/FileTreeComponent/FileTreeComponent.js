@@ -18,6 +18,15 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 class FileTreeComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "",
+      open: false,
+      setOpen: false
+    };
+  }
+
   componentDidMount() {
     this.props.fetchFolders();
   }
