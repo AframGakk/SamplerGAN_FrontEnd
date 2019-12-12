@@ -9,21 +9,34 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 class AdminView extends React.Component {
-  renderResults(results) {
+  renderResultsDisLoss(results) {
     console.log(results);
     if (!results) {
       return <TableCell>No results</TableCell>;
     } else {
-      return (
-        <TableCell>
-          {
-            (results.id,
-            results.discriminator_accuracy,
-            results.discriminator_loss,
-            results.generator_loss)
-          }
-        </TableCell>
-      );
+      return <TableCell>{results.discriminator_loss}</TableCell>;
+    }
+  }
+
+  renderResultsGenLoss(results) {
+    console.log(results);
+    if (!results) {
+      return <TableCell>No results</TableCell>;
+    } else {
+      return <TableCell>{results.generator_loss}</TableCell>;
+    }
+  }
+
+  renderStatus(status) {
+    console.log(status);
+    if (status == 1) {
+      return <TableCell>In Progress</TableCell>;
+    } else if (status == 2) {
+      return <TableCell>Done</TableCell>;
+    } else if (status == 3) {
+      return <TableCell>Failed</TableCell>;
+    } else if (status == 4) {
+      return <TableCell>In queue</TableCell>;
     }
   }
 
@@ -43,8 +56,9 @@ class AdminView extends React.Component {
           <TableCell align="right">{job.description}</TableCell>
           <TableCell align="right">{job.model_location}</TableCell>
           <TableCell align="right">{job.record_location}</TableCell>
-          {this.renderResults(job.results)}
-          <TableCell align="right">{job.status}</TableCell>
+          {this.renderResultsDisLoss(job.results)}
+          {this.renderResultsGenLoss(job.results)}
+          {this.renderStatus(job.status)}
           <TableCell align="right">{job.version}</TableCell>
         </TableRow>
       );
@@ -70,7 +84,7 @@ class AdminView extends React.Component {
   render() {
     const useStyles = makeStyles({
       root: {
-        width: "100%",
+        width: "80%",
         overflowX: "auto"
       },
       table: {
@@ -90,7 +104,8 @@ class AdminView extends React.Component {
                 <TableCell align="right">Description</TableCell>
                 <TableCell align="right">Model location</TableCell>
                 <TableCell align="right">Record location</TableCell>
-                <TableCell align="right">Results</TableCell>
+                <TableCell align="right">Results Discriminator</TableCell>
+                <TableCell align="right">Results Generator</TableCell>
                 <TableCell align="right">Status</TableCell>
                 <TableCell align="right">Version</TableCell>
                 {/*<TableCell align="right">Carbs&nbsp;(g)</TableCell>*/}
