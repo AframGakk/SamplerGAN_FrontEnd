@@ -22,7 +22,6 @@ class FileTreeComponent extends React.Component {
     this.props.fetchFolders();
   }
 
-
   renderFolderList() {
     // Here is where the FoldeTree is rendering and
     // calling Treefile and passing folderid down
@@ -60,8 +59,6 @@ class FileTreeComponent extends React.Component {
   clickedClose = () => {
     console.log("Loka!");
     this.setState({ open: false });
-  };
-    console.log("handleChange");
   };
 
   // Clicking featured objects

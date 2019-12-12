@@ -7,9 +7,13 @@ import TextField from "@material-ui/core/TextField";
 import { history } from "../../helpers";
 
 import "./landingSite.css";
-import { createUser } from "../../actions";
+import { createUser, fetchJobs } from "../../actions";
 
 class LandingSite extends React.Component {
+  componentDidMount() {
+    this.props.fetchJobs();
+  }
+
   render() {
     return (
       <div>
@@ -163,5 +167,6 @@ const mapStateToProps = state => {
 // connect to Provider -> ReduxStore
 export default connect(mapStateToProps, {
   // Calling the action creators
-  createUser: createUser
+  createUser: createUser,
+  fetchJobs: fetchJobs
 })(LandingSite);

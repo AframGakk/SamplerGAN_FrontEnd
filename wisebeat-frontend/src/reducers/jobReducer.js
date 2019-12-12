@@ -1,4 +1,4 @@
-import { FETCH_JOBS } from "../actions/types";
+import { FETCH_JOBS, POST_NEW_GENERATOR_MODEL } from "../actions/types";
 // JOB REDUCER
 
 export default (state = [], action) => {

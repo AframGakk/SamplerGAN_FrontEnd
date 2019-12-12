@@ -33,11 +33,10 @@ import {
   GET_CURRENT_USER,
   GENERATE_NEW_FILE,
   SAVE_THE_NEWLY_GENERATED_FILE,
-  DELAY_VALUE_CHANGED
+  POST_NEW_GENERATOR_MODEL
 } from "../actions/types";
 
 // ACTION CREATOR
-
 
 //FOLDERS
 export const fetchFolders = () => async dispatch => {
@@ -52,7 +51,6 @@ export const fetchFolders = () => async dispatch => {
   //console.log("Hi er í FetchFolders Action Creator");
   dispatch({ type: FETCH_FOLDERS, payload: response.data });
 };
-
 
 export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
   let currentUser = localStorage.getItem("username");
@@ -110,16 +108,6 @@ export const fetchSelectedFileMetadata = fileid => async dispatch => {
   });
   dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: response.data[0] });
 };
-
-//METADATA
-  //console.log("Hi er í SelectFile Action Creator");
-  //console.log(`fileid:${fileid}`);
-  const respsone = await metadata.get(`/metadata/${fileid}`, {
-    params: { username: "IvarKristinn" }
-  });
-  dispatch({ type: FETCH_SELECTED_FILE_METADATA, payload: respsone.data[0] });
-};
-
 
 export const gainValChanged = value => {
   //console.log("Hi er í gainValChanged Action Creator");
@@ -223,13 +211,13 @@ export const updateMetadata = (id, meta) => async dispatch => {
 
 // SAMPLE
 // ÞEGAR ÞÚ VELUR FÆLINN
-/*export const fetchSelectedSampleData = loc => async dispatch => {
+export const fetchSelectedSampleData = loc => async dispatch => {
   let currentUser = localStorage.getItem("username");
   let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
 
   // Construction data body for sample service
-  const body = { username: bodyUserName, location: loc };
+  const body = { username: currentUser, location: loc };
 
   console.log(body);
 
@@ -238,7 +226,6 @@ export const updateMetadata = (id, meta) => async dispatch => {
   });
   dispatch({ type: FETCH_SELECTED_SAMPLE_DATA, payload: response.data });
 };
-*/
 
 // Generate new file
 export const fetchGenerateSampleData = () => async dispatch => {
@@ -377,7 +364,9 @@ export const createUser = (
 
 // ADMIN
 export const fetchJobs = () => async dispatch => {
-  const response = await jobdata.get("/job");
+  const response = await jobdata.get("/job", {
+    headers: { Authorization: "asghwegalkjerhghoaier0439845!" }
+  });
   //console.log("Hi er í fetchJobs Action Creator");
   dispatch({ type: FETCH_JOBS, payload: response.data });
 };

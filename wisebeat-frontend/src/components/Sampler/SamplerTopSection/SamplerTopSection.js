@@ -26,6 +26,23 @@ class SamplerTopSection extends React.Component {
     };
   }
 
+  changeAudioMeta = meta => {
+    this.engine.setMetaValues(meta);
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  onClickPlayHandle = () => {
+    this.engine.play(this.props.meta);
+  };
+
+  render() {
     // TODO: Remove hardcoded values
     this.props.meta.filters = false;
     this.props.meta.envelopes = false;
@@ -44,25 +61,6 @@ class SamplerTopSection extends React.Component {
 
     this.engine = new AudioEngine();
     this.engine.init_sound(audiomock);
-  }
-
-  changeAudioMeta = meta => {
-    this.engine.setMetaValues(meta);
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  onClickPlayHandle = () => {
-    this.engine.play(this.props.meta);
-  };
-
-  render() {
     const ITEM_HEIGHT = 48;
     const open = Boolean(this.state.anchorEl);
     //console.log(this.props);

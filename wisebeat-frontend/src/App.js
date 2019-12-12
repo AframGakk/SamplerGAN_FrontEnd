@@ -16,7 +16,7 @@ const App = () => {
   return (
     <div>
       <NavigationBar />
-      <div className="container">
+      <div>
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={LandingSite} />
