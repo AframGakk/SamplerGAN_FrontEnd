@@ -1,13 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Divider,
-  Grid,
-  IconButton,
-  Menu,
-  MenuItem,
-  Button
-} from "@material-ui/core";
+import { Divider, IconButton, Menu, MenuItem, Button } from "@material-ui/core";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./SamplerTopSection.css";
@@ -24,8 +17,23 @@ class SamplerTopSection extends React.Component {
       name: "",
       anchorEl: null
     };
-  }
 
+    // TODO: Remove hardcoded values
+    this.props.meta.filters = false;
+    this.props.meta.envelopes = false;
+    this.props.meta.fx = false;
+
+    this.props.meta.gain = 100.0;
+    this.props.meta.cutoff = 1000;
+    this.props.meta.attack = 0;
+    this.props.meta.hold = 1;
+    this.props.meta.decay = 0;
+    this.props.meta.reso = 0;
+    this.props.meta.delay = 0;
+    this.props.meta.reverb = 0;
+
+    console.log(audiomock.length);
+  }
   changeAudioMeta = meta => {
     this.engine.setMetaValues(meta);
   };
@@ -43,22 +51,6 @@ class SamplerTopSection extends React.Component {
   };
 
   render() {
-    // TODO: Remove hardcoded values
-    this.props.meta.filters = false;
-    this.props.meta.envelopes = false;
-    this.props.meta.fx = false;
-
-    this.props.meta.gain = 100.0;
-    this.props.meta.cutoff = 1000;
-    this.props.meta.attack = 0;
-    this.props.meta.hold = 1;
-    this.props.meta.decay = 0;
-    this.props.meta.reso = 0;
-    this.props.meta.delay = 0;
-    this.props.meta.reverb = 0;
-
-    console.log(audiomock.length);
-
     this.engine = new AudioEngine();
     this.engine.init_sound(audiomock);
     const ITEM_HEIGHT = 48;
@@ -121,13 +113,11 @@ class SamplerTopSection extends React.Component {
 }
 
 const mapStateToProps = state => {
-  //console.log(state);
   // Configure connect to tell redux store that we wanna get
   // the file that is selected in the Filetree
   return {
     file: state.selectedFile,
     meta: state.selectedFileMetadata
-    //meta: this.changeAudioMeta(state.selectedFileMetadata)
   };
 };
 

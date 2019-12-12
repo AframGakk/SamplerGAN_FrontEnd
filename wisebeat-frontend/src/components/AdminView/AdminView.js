@@ -54,7 +54,6 @@ class AdminView extends React.Component {
   }
 
   renderResultsDisLoss(results) {
-    //console.log(results);
     if (!results) {
       return <TableCell>No results</TableCell>;
     } else {
@@ -63,7 +62,6 @@ class AdminView extends React.Component {
   }
 
   renderResultsGenLoss(results) {
-    //console.log(results);
     if (!results) {
       return <TableCell>No results</TableCell>;
     } else {
@@ -72,14 +70,13 @@ class AdminView extends React.Component {
   }
 
   renderStatus(status) {
-    //console.log(status);
-    if (status == 1) {
+    if (status === 1) {
       return <TableCell>In Progress</TableCell>;
-    } else if (status == 2) {
+    } else if (status === 2) {
       return <TableCell>Done</TableCell>;
-    } else if (status == 3) {
+    } else if (status === 3) {
       return <TableCell>Failed</TableCell>;
-    } else if (status == 4) {
+    } else if (status === 4) {
       return <TableCell>In queue</TableCell>;
     }
   }
@@ -87,7 +84,6 @@ class AdminView extends React.Component {
   renderTable() {
     const jobs = this.props.jobs;
     const { classes } = this.props;
-    //console.log(jobs);
 
     const sortedJobs = jobs.sort(function(a, b) {
       return a.id - b.id;

@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import ReactDom from "react-dom";
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
@@ -8,6 +7,7 @@ import Container from "@material-ui/core/Container";
 import { signIn } from "../../actions";
 import { withStyles } from "@material-ui/core/styles";
 import "./Logis.css";
+import { fetchJobs } from "../../actions";
 
 const useStyles = theme => ({
   root: {
@@ -16,6 +16,9 @@ const useStyles = theme => ({
 });
 
 class Login extends React.Component {
+  componentDidMount() {
+    this.props.fetchJobs();
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -82,9 +85,9 @@ class Login extends React.Component {
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
   // all the folders
-  //console.log(state);
 };
 
 export default connect(mapStateToProps, {
-  signIn: signIn
+  signIn: signIn,
+  fetchJobs: fetchJobs
 })(withStyles(useStyles)(Login));

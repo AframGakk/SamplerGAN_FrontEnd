@@ -25,20 +25,16 @@ import {
   FETCH_SELECTED_SAMPLE_DATA,
   CREATE_FOLDER,
   AUTHENTICATED,
-  UNAUTHENTICATED,
   AUTHENTICATION_ERROR,
   FETCH_JOBS,
   CREATE_USER,
   USER_LOGOUT,
-  GET_CURRENT_USER,
   GENERATE_NEW_FILE,
   SAVE_THE_NEWLY_GENERATED_FILE,
   POST_NEW_GENERATOR_MODEL,
   POST_NEW_JOB,
   UPDATE_USER
 } from "../actions/types";
-
-// ACTION CREATOR
 
 //FOLDERS
 export const fetchFolders = () => async dispatch => {
@@ -50,20 +46,18 @@ export const fetchFolders = () => async dispatch => {
     headers: { Authorization: jwt },
     params: { username: currentUser }
   });
-  //console.log("Hi er í FetchFolders Action Creator");
   dispatch({ type: FETCH_FOLDERS, payload: response.data });
 };
 
+// Create new folder
 export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
   let currentUser = localStorage.getItem("username");
-  let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
   // Construction data body for sample service
   const body = { name: foldern, parent: parId, user: usId, location: loc };
-  //console.log(body);
 
   // Create the new folder
-  const makefile = await metadata.post(`/users/${usId}/folders`, body, {
+  await metadata.post(`/users/${usId}/folders`, body, {
     headers: { Authorization: jwt },
     params: { username: currentUser }
   });
@@ -73,11 +67,12 @@ export const createFolder = (foldern, parId, usId, loc) => async dispatch => {
     headers: { Authorization: jwt },
     params: { username: currentUser }
   });
-  //console.log("Hi er í CREATEFOLDER Action Creator");
   dispatch({ type: CREATE_FOLDER, payload: response.data });
 };
 
 //FILES
+
+// Gets all users files
 export const fetchFiles = () => async dispatch => {
   let currentUser = localStorage.getItem("username");
   let currentUserId = localStorage.getItem("userid");
@@ -86,24 +81,21 @@ export const fetchFiles = () => async dispatch => {
     headers: { Authorization: jwt },
     params: { username: currentUser }
   });
-  //console.log("Hi er í FetchFiles Action Creator");
   dispatch({ type: FETCH_FILES, payload: response.data });
 };
 
+// Get the info on selected file
 export const selectFile = file => {
-  //console.log("Hi er í SelectFile Action Creator");
   return {
     type: FILE_SELECTED,
     payload: file
   };
 };
 
+// Fetch select file metadata
 export const fetchSelectedFileMetadata = fileid => async dispatch => {
   let currentUser = localStorage.getItem("username");
-  let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
-  //console.log("Hi er í SelectFile Action Creator");
-  //console.log(`fileid:${fileid}`);
   const response = await metadata.get(`/${fileid}`, {
     headers: { Authorization: jwt },
     params: { username: currentUser }
@@ -112,7 +104,6 @@ export const fetchSelectedFileMetadata = fileid => async dispatch => {
 };
 
 export const gainValChanged = value => {
-  //console.log("Hi er í gainValChanged Action Creator");
   return {
     type: GAIN_VALUE_CHANGED,
     payload: value
@@ -120,7 +111,6 @@ export const gainValChanged = value => {
 };
 
 export const envelopesValChanged = value => {
-  //console.log("Hi er í gainValChanged Action Creator");
   return {
     type: ENVELOPES_VALUE_CHANGED,
     payload: value
@@ -128,7 +118,6 @@ export const envelopesValChanged = value => {
 };
 
 export const attackValChanged = value => {
-  //console.log("Hi er í attackValChanged Action Creator");
   return {
     type: ATTACK_VALUE_CHANGED,
     payload: value
@@ -136,7 +125,6 @@ export const attackValChanged = value => {
 };
 
 export const holdValChanged = value => {
-  //console.log("Hi er í holdValChanged Action Creator");
   return {
     type: HOLD_VALUE_CHANGED,
     payload: value
@@ -144,7 +132,6 @@ export const holdValChanged = value => {
 };
 
 export const decayValChanged = value => {
-  //console.log("Hi er í decayValChanged Action Creator");
   return {
     type: DECAY_VALUE_CHANGED,
     payload: value
@@ -152,7 +139,6 @@ export const decayValChanged = value => {
 };
 
 export const filtersValChanged = value => {
-  //console.log("Hi er í filtersValChanged Action Creator");
   return {
     type: FILTERS_VALUE_CHANGED,
     payload: value
@@ -160,7 +146,6 @@ export const filtersValChanged = value => {
 };
 
 export const cutoffValChanged = value => {
-  //console.log("Hi er í cutoffValChanged Action Creator");
   return {
     type: CUTOFF_VALUE_CHANGED,
     payload: value
@@ -168,7 +153,6 @@ export const cutoffValChanged = value => {
 };
 
 export const resoValChanged = value => {
-  //console.log("Hi er í resoValChanged Action Creator");
   return {
     type: RESO_VALUE_CHANGED,
     payload: value
@@ -176,7 +160,6 @@ export const resoValChanged = value => {
 };
 
 export const fxValChanged = value => {
-  //console.log("Hi er í fxValChanged Action Creator");
   return {
     type: FX_VALUE_CHANGED,
     payload: value
@@ -184,7 +167,6 @@ export const fxValChanged = value => {
 };
 
 export const reverbValChanged = value => {
-  //console.log("Hi er í reverbValChanged Action Creator");
   return {
     type: REVERB_VALUE_CHANGED,
     payload: value
@@ -192,18 +174,17 @@ export const reverbValChanged = value => {
 };
 
 export const delayValChanged = value => {
-  //console.log("Hi er í delayValChanged Action Creator");
   return {
     type: DELAY_VALUE_CHANGED,
     payload: value
   };
 };
 
+// Updates file metadata, after interacting with the sampler
 export const updateMetadata = (id, meta) => async dispatch => {
   let currentUser = localStorage.getItem("username");
-  let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
-  //console.log("Hi er í FetchFolders Action Creator");
+
   const response = await metadata.put(`/${id}`, meta, {
     headers: { Authorization: jwt },
     params: { username: currentUser }
@@ -212,16 +193,13 @@ export const updateMetadata = (id, meta) => async dispatch => {
 };
 
 // SAMPLE
-// ÞEGAR ÞÚ VELUR FÆLINN
+
+// Fetch the selected Sample data
 export const fetchSelectedSampleData = loc => async dispatch => {
   let currentUser = localStorage.getItem("username");
-  let currentUserId = localStorage.getItem("userid");
-  let jwt = localStorage.getItem("jwt");
 
   // Construction data body for sample service
   const body = { username: currentUser, location: loc };
-
-  console.log(body);
 
   const response = await sampledata.get(`/sample`, body, {
     params: { username: `${currentUser}` }
@@ -232,7 +210,6 @@ export const fetchSelectedSampleData = loc => async dispatch => {
 // Generate new file
 export const fetchGenerateSampleData = () => async dispatch => {
   let currentUser = localStorage.getItem("username");
-  let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
   const response = await generate.post(
     "/generator",
@@ -244,19 +221,14 @@ export const fetchGenerateSampleData = () => async dispatch => {
       headers: { Authorization: jwt }
     }
   );
-  //console.log("Hi er í FetchFolders Action Creator");
-  //console.log(response.data);
   dispatch({ type: GENERATE_NEW_FILE, payload: response["data"] });
 };
+
 // Save the newly generated file
-// þarf að fá inn sample arrayinn sjálfann hingað inn, svo save takinn þarf að hafa aðgang
-// að selectedFileSoundDataReducer
 export const saveGeneratedSampleData = _data => async dispatch => {
-  //SAVE_THE_NEWLY_GENERATED_FILE
   let currentUser = localStorage.getItem("username");
   let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
-  console.log(_data);
 
   const body = {
     Name: "NewFile",
@@ -265,12 +237,10 @@ export const saveGeneratedSampleData = _data => async dispatch => {
     Parent: 8
   };
 
-  const resp = await metadata.post(`/users/${currentUserId}/files`, body, {
+  await metadata.post(`/users/${currentUserId}/files`, body, {
     headers: { Authorization: jwt },
     params: { username: currentUser }
   });
-
-  console.log(resp);
 
   const response = await sampledata.post(
     "/sample",
@@ -283,60 +253,50 @@ export const saveGeneratedSampleData = _data => async dispatch => {
       headers: { Authorization: jwt }
     }
   );
-  //console.log("Hi er í FetchFolders Action Creator");
-  //console.log(response.data);
   dispatch({ type: SAVE_THE_NEWLY_GENERATED_FILE, payload: response.data });
 };
 
 // USER
+// Sign in function, now used just for admin purposes
 export const signIn = (_username, _password) => async dispatch => {
-  if (
-    new String(_username).valueOf() == new String("admin").valueOf() &&
-    new String(_password).valueOf() == new String("admin").valueOf()
-  ) {
-    console.log("ADMIN");
-    history.push("/admin");
-  } else {
-    const body = { username: _username, password: _password };
-    console.log(body);
-    try {
-      const response = await auth.post(`/authenticate`, body, {
-        params: { username: `${_username}` }
-      });
+  const body = { username: _username, password: _password };
+  try {
+    const response = await auth.post(`/authenticate`, body, {
+      params: { username: `${_username}` }
+    });
 
-      const userId = await userdata.get("/username", {
-        params: { username: `${_username}` }
-      });
+    const userId = await userdata.get("/username", {
+      params: { username: `${_username}` }
+    });
 
-      setTimeout(function() {
-        localStorage.setItem("jwt", response.data);
-        localStorage.setItem("username", _username);
-        localStorage.setItem("userid", userId.data);
-      }, 1500);
+    setTimeout(function() {
+      localStorage.setItem("jwt", response.data);
+      localStorage.setItem("username", _username);
+      localStorage.setItem("userid", userId.data);
+    }, 1500);
 
-      dispatch({ type: AUTHENTICATED });
-      // Was loading too fast, an was resulting in that the variables were returning null
-      history.push("/studio");
-    } catch (error) {
-      dispatch({
-        type: AUTHENTICATION_ERROR,
-        payload: "Invalid email or password"
-        //response.data
-      });
-    }
+    dispatch({ type: AUTHENTICATED });
+    // Was loading too fast, an was resulting in that the variables were returning null
+    history.push("/panel");
+  } catch (error) {
+    dispatch({
+      type: AUTHENTICATION_ERROR,
+      payload: "Invalid email or password"
+    });
   }
 };
 
+// Log out function, now used for admin purposes
 export const logOut = () => {
-  //console.log("Hi er í logOut Action Creator");
   // remove user from local storage to log user out
   localStorage.clear();
-  history.push("/login");
+  history.push("/admin");
   return {
     type: USER_LOGOUT
   };
 };
 
+// Sign up function
 export const createUser = (
   _username,
   _firstname,
@@ -357,12 +317,12 @@ export const createUser = (
   // Create the new user
   const response = await userdata.post("/", body);
 
-  // logga this new user in
+  // log this new user in
   dispatch(signIn(_username, _password));
-  //console.log("Hi er í createUser Action Creator");
   dispatch({ type: CREATE_USER, payload: response.data });
 };
 
+// Update user function
 export const updateUser = (
   _firstname,
   _lastname,
@@ -370,7 +330,6 @@ export const updateUser = (
   _email
 ) => async dispatch => {
   let currentUser = localStorage.getItem("username");
-  let currentUserId = localStorage.getItem("userid");
   let jwt = localStorage.getItem("jwt");
   const body = {
     firstname: _firstname,
@@ -378,7 +337,6 @@ export const updateUser = (
     email: _email,
     password: _password
   };
-  console.log(body);
 
   const response = await userdata.patch("/", body, {
     headers: { Authorization: jwt },
@@ -394,7 +352,6 @@ export const fetchJobs = () => async dispatch => {
   const response = await jobdata.get("/job", {
     headers: { Authorization: "asghwegalkjerhghoaier0439845!" }
   });
-  //console.log("Hi er í fetchJobs Action Creator");
   dispatch({ type: FETCH_JOBS, payload: response.data });
 };
 
@@ -409,22 +366,6 @@ export const createJob = (
   _ep,
   _description
 ) => async dispatch => {
-  /*const body = {
-    label: _label,
-    version: Number(_version),
-    sound_type: 1,
-    parameters: {
-      batch_size: Number(_batchsize),
-      adam_learning_rate: Number(_learningrate),
-      adam_beta: Number(_adambeta),
-      lrelu_alpha: Number(_lreluaalpha),
-      episodes: Number(_ep)
-    },
-    description: _description
-  };
-
-  console.log(body);*/
-
   const response = await jobdata.post(
     "/job",
     {
@@ -445,7 +386,6 @@ export const createJob = (
     }
   );
 
-  console.log("Hi er í createJob Action Creator");
   dispatch({ type: POST_NEW_JOB, payload: response.data });
 };
 

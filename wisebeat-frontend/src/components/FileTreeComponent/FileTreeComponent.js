@@ -1,21 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import "./fileTreeComponent.css";
-import { Grid, AppBar, Tabs, Tab, Chip, Button } from "@material-ui/core";
+import { AppBar, Tabs, Tab, Chip, Button } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { TreeView, TreeItem } from "@material-ui/lab";
 import TabPanel from "./TabPanel/TabPanel";
 import TreeFile from "../TreeFile/TreeFile";
-import { fetchFolders, createFolder } from "../../actions";
 import AddIcon from "@material-ui/icons/Add";
-
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+
+import { fetchFolders, createFolder } from "../../actions";
+import "./fileTreeComponent.css";
 
 class FileTreeComponent extends React.Component {
   constructor(props) {
@@ -46,34 +44,18 @@ class FileTreeComponent extends React.Component {
   // Switching the panel view
   handleChange = (event, newValue) => {
     this.setState({ value: newValue });
-    //console.log("handleChange");
   };
 
   handleChangeIndex = index => {
     this.setState(index);
-    console.log("handleChangeIndex");
-  };
-
-  // Clicking featured objects
-  handleChipClick = () => {
-    //console.info("You clicked the Chip.");
-    //console.log("handleChipClick");
   };
 
   clickedOpen = () => {
-    console.log("Opna!");
     this.setState({ open: true });
   };
 
   clickedClose = () => {
-    console.log("Loka!");
     this.setState({ open: false });
-  };
-
-  // Clicking featured objects
-  handleChipClick = () => {
-    console.info("You clicked the Chip.");
-    console.log("handleChipClick");
   };
 
   render() {
@@ -171,12 +153,7 @@ class FileTreeComponent extends React.Component {
           </TreeView>
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          <Chip
-            label={"Kick"}
-            color="secondary"
-            size="small"
-            onClick={this.handleChipClick}
-          />
+          <Chip label={"Kick"} color="secondary" size="small" />
           <Chip label={"Snare"} color="secondary" size="small" />
           <Chip label={"Clap"} color="secondary" size="small" />
         </TabPanel>

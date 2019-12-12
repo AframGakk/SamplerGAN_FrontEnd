@@ -9,8 +9,6 @@ import jobReducer from "../reducers/jobReducer";
 import userReducer from "../reducers/userReducer";
 import generatorReducer from "../reducers/generatorReducer";
 
-// COMBINE REDUCERS
-
 export default combineReducers({
   folders: folderReducer,
   files: fileReducer,
