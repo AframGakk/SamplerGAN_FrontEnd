@@ -31,31 +31,7 @@ class Sampler extends React.Component {
             <FxComponent />
           </div>
         </Grid>
-        <Grid item xs={5} className={"secondGrid"}>
-          {/* Updates metadata with props from redux store*/}
-          <Button
-            variant="contained"
-            color="primary"
-            size="medium"
-            startIcon={<SaveIcon />}
-            onClick={() =>
-              this.props.updateMetadata(this.props.meta.id, this.props.meta)
-            }
-          >
-            Save
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="medium"
-            startIcon={<SaveIcon />}
-            onClick={() =>
-              this.props.saveGeneratedSampleData(this.props.newfiledata)
-            }
-          >
-            New file
-          </Button>
-        </Grid>
+        <Grid item xs={5} className={"secondGrid"}></Grid>
         <Grid item xs={5} className={"secondGrid"}>
           <EnvelopeComonent />
         </Grid>

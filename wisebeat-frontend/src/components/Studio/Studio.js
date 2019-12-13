@@ -7,7 +7,7 @@ class Studio extends React.Component {
   render() {
     return (
       <Grid container spacing={3} className={"studioContainer"}>
-        <Grid item xs={12} className={"studioGridItem"}>
+        <Grid item xs={10} className={"studioGridItem"}>
           <Sampler />
         </Grid>
       </Grid>

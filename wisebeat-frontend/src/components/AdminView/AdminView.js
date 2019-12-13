@@ -35,7 +35,9 @@ const useStyles = theme => ({
     background: "#9e9e9e"
   },
   button: {
-    marginRight: theme.spacing(5)
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    marginTop: 25
   }
 });
 
@@ -277,7 +279,7 @@ class AdminView extends React.Component {
           </Button>
           <Container maxWidth="xl">
             <Paper className={classes.paper}>
-              <Table size="small" aria-label="a dense table">
+              <Table size="small" aria-label="sticky table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Job label</TableCell>
