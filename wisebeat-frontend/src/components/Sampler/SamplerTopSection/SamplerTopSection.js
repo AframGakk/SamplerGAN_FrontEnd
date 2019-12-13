@@ -74,41 +74,13 @@ class SamplerTopSection extends React.Component {
             {/*<div className={"filetype"}>{this.props.file.sound_type}</div>*/}
           </div>
         </div>
-        <div className={"sampler-top-section-right"}>
-          <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={this.handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="long-menu"
-            anchorEl={this.state.anchorEl}
-            keepMounted
-            open={open}
-            onClose={this.handleClose}
-            PaperProps={{
-              style: {
-                maxHeight: ITEM_HEIGHT * 4.5,
-                width: 200
-              }
-            }}
-          >
-            <MenuItem key={"value1"} onClick={this.onDownloadClick}>
-              Download
-            </MenuItem>
-          </Menu>
-          <Divider orientation={"vertical"} />
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => this.props.fetchGenerateSampleData()}
-          >
-            Generate file
-          </Button>
-        </div>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => this.props.fetchGenerateSampleData()}
+        >
+          Generate file
+        </Button>
       </div>
     );
   }
