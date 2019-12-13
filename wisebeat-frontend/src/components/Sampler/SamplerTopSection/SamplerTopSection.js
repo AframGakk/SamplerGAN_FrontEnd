@@ -5,6 +5,7 @@ import PlayArrow from "@material-ui/icons/PlayArrow";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./SamplerTopSection.css";
 import AudioEngine from "../../../AudioEngine/AudioEngine";
+import Recorder from 'recorder-js';
 
 import audiomock from "../../../mockdata/audiomock";
 
@@ -31,8 +32,9 @@ class SamplerTopSection extends React.Component {
     this.props.meta.reso = 0;
     this.props.meta.delay = 0;
     this.props.meta.reverb = 0;
+    this.engine = new AudioEngine();
+  }
 
-    console.log(audiomock.length);
   }
   changeAudioMeta = meta => {
     this.engine.setMetaValues(meta);
@@ -47,8 +49,14 @@ class SamplerTopSection extends React.Component {
   };
 
   onClickPlayHandle = () => {
-    this.engine.play(this.props.meta);
+    this.engine.play(this.props.meta, this.props.newFileData);
+    };
+
+  onDownloadClick = () => {
+
+    this.engine.download(this.props.meta);
   };
+
 
   render() {
     this.engine = new AudioEngine();
@@ -91,8 +99,8 @@ class SamplerTopSection extends React.Component {
               }
             }}
           >
-            <MenuItem key={"value1"} onClick={this.handleClose}>
-              Value1
+            <MenuItem key={"value1"} onClick={this.onDownloadClick}>
+              Download
             </MenuItem>
             <MenuItem key={"value2"} onClick={this.handleClose}>
               Value2
@@ -117,7 +125,8 @@ const mapStateToProps = state => {
   // the file that is selected in the Filetree
   return {
     file: state.selectedFile,
-    meta: state.selectedFileMetadata
+    meta: state.selectedFileMetadata,
+    newFileData: state.selectedFileSoundDataReducer.newFileData
   };
 };
 

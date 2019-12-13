@@ -1,6 +1,9 @@
 var ctx = null;
 var sound = null;
 var createBuffer = require("audio-buffer-from");
+var toWav = require('audiobuffer-to-wav');
+var Recorder = require('recorder-js');
+
 
 class AudioEngine {
   constructor() {
@@ -21,17 +24,7 @@ class AudioEngine {
     this.frequencyValue = 1000;
     this.delayValue = 1.0;
 
-    // gain node create
-    this.gainNode = ctx.createGain();
-    this.gainNode.gain.value = 1.0;
 
-    // create filter node
-    this.filter = ctx.createBiquadFilter();
-    this.filter.frequency.value = 0;
-    this.filter.type = "allpass";
-
-    // delay node
-    this.delayNode = ctx.createDelay(this.delayValue);
   }
 
   init_sound(url) {
@@ -86,25 +79,57 @@ class AudioEngine {
     this.gainValue = meta.gain;
   }
 
-  play(metadata) {
-    console.log(metadata);
+  play(metadata, sound) {
+    if (sound != undefined) {
+      this.init_sound(sound);
+      var source = this.run_pipe(metadata);
+      source.start(0);
+    }
+  }
+
+  download(metadata) {
+    var source = this.run_pipe(metadata);
+
+    var wav = toWav(source.buffer);
+    const element = document.createElement("a");
+    const file = new Blob([new DataView(wav), {type: 'audio/wav'}]);
+    element.href = URL.createObjectURL(file);
+    element.download = "output.wav";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+
+  run_pipe(metadata) {
     var source = ctx.createBufferSource();
     source.buffer = sound;
     var sample_len = source.buffer.length / source.buffer.sampleRate;
+
+    // gain node create
+    this.gainNode = ctx.createGain();
+    this.gainNode.gain.value = metadata.gain / 100.0; //this.gainValue;
+
+    // create filter node
+    this.filter = ctx.createBiquadFilter();
+    this.filter.frequency.value = 0;
+    this.filter.type = "allpass";
+
+    // delay node
+    this.delayNode = ctx.createDelay(this.delayValue);
+
+
+
 
     // source pipe
     source
       .connect(this.gainNode)
       .connect(this.filter)
+        .connect(this.delayNode)
       .connect(ctx.destination);
 
-    // gain connect
-    //source = source.connect(this.gainNode);
-    //this.gainNode.connect(ctx.destination);
-    var gain = metadata.gain / 100.0;
-    this.gainNode.gain.value = gain; //this.gainValue;
+
 
     if (metadata.filters) {
+      this.filter.Q.value = metadata.reso;
       this.filter.frequency.value = metadata.cutoff;
       this.filter.type = "lowpass";
     } else {
@@ -114,25 +139,22 @@ class AudioEngine {
     if (metadata.envelopes) {
       //var decayOutput =
       var now = ctx.currentTime;
-      this.gainNode.gain.cancelScheduledValues(now);
-
-      // Attack
-      // Anchor beginning of ramp at current value.
-      this.gainNode.gain.setValueAtTime(0, now);
-      // Ramp up
-      this.gainNode.gain.linearRampToValueAtTime(gain, now + metadata.attack);
-      // Decay
-      // Ramp down
+      var attack = metadata.attack / 100;
+      var decay = metadata.decay / 100;
+      var hold = metadata.hold / 100;
       var decayTime = null;
-      sample_len - metadata.attack < metadata.decay
-        ? (decayTime = metadata.attack)
-        : (decayTime = sample_len - metadata.decay);
+      sample_len - attack < decay
+          ? (decayTime = attack)
+          : (decayTime = sample_len - decay);
 
-      //console.log(sample_len);
 
-      //console.log(decayTime);
+      this.gainNode.gain.cancelScheduledValues(now);
+      this.gainNode.gain.setValueAtTime(0, now);
 
-      this.gainNode.gain.linearRampToValueAtTime(0, decayTime);
+      this.gainNode.gain.setTargetAtTime(0, now + decayTime, hold);
+
+      this.gainNode.gain.linearRampToValueAtTime(this.gainNode.gain.value, now + attack);
+
     }
 
     if (metadata.fx) {
@@ -142,6 +164,7 @@ class AudioEngine {
       feedback.gain.value = 0.4;
       this.delayNode.connect(feedback);
       feedback.connect(this.delayNode);
+      this.source.connect(this.delayNode);
     } else {
       this.delayNode.value = 0;
     }
@@ -151,7 +174,7 @@ class AudioEngine {
     //source.connect(ctx.destination);
 
     // start audio
-    source.start(0);
+    return source;
   }
 }
 

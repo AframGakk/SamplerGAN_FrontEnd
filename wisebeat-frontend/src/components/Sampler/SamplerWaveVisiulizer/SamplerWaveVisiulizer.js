@@ -10,6 +10,7 @@ import audiomock from '../../../mockdata/audiomock';
 //import CanvasJSReact from '../../../assets/canvasjs.react';
 //import { CanvasJS } from '../../../assets/canvasjs.react';
 import { CanvasJSChart} from '../../../assets/canvasjs.react';
+import { connect } from "react-redux";
 
 
 function drawBuffer( width, height, context, buffer ) {
@@ -38,25 +39,26 @@ class SamplerWaveVisiulizer extends React.Component {
             name: ''
         };
 
-        this.data = audiomock;
+
     }
 
     render() {
-
-        var limit = this.data.length;
-		var y = 100;
-		var data = [];
-		var dataSeries = { type: "line" };
-		var dataPoints = [];
-
-		for (var i = 0; i < limit; i += 1) {
-			dataPoints.push({
-				x: i/16000,
-				y: this.data[i]
-			});
-		}
-		dataSeries.dataPoints = dataPoints;
-		data.push(dataSeries);
+        var dataPoints = [];
+        if (this.props.newFileData != undefined) {
+            var new_data = this.props.newFileData;
+            var limit = new_data.length;
+            var y = 100;
+            var data = [];
+            var dataSeries = { type: "line" };
+            for (var i = 0; i < limit; i += 1) {
+                dataPoints.push({
+                    x: i/16000,
+                    y: new_data[i]
+                });
+            }
+            dataSeries.dataPoints = dataPoints;
+            data.push(dataSeries);
+        }
 
 		const options = {
 		    theme: "dark2",
@@ -88,4 +90,18 @@ class SamplerWaveVisiulizer extends React.Component {
     }
 }
 
-export default SamplerWaveVisiulizer;
+
+const mapStateToProps = state => {
+  //console.log(state);
+  // Configure connect to tell redux store that we wanna get
+  // the file that is selected in the Filetree
+  return {
+    newFileData: state.selectedFileSoundDataReducer.newFileData
+    //meta: this.changeAudioMeta(state.selectedFileMetadata)
+  };
+};
+
+
+
+// connect to Provider -> ReduxStore
+export default connect(mapStateToProps)(SamplerWaveVisiulizer);
