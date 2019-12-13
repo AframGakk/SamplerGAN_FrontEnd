@@ -1,3 +1,4 @@
+// General
 export const FETCH_FOLDERS = "FETCH_FOLDERS";
 export const FETCH_FILES = "FETCH_FILES";
 export const FILE_SELECTED = "FILE_SELECTED";
@@ -18,14 +19,16 @@ export const FETCH_SELECTED_SAMPLE_DATA = "FETCH_SELECTED_SAMPLE_DATA";
 export const CREATE_FOLDER = "CREATE_FOLDER";
 export const GENERATE_NEW_FILE = "GENERATE_NEW_FILE";
 export const SAVE_THE_NEWLY_GENERATED_FILE = "SAVE_THE_NEWLY_GENERATED_FILE";
-// auth
+// Auth
 export const AUTHENTICATED = "authenticated_user";
 export const UNAUTHENTICATED = "unauthenticated_user";
 export const AUTHENTICATION_ERROR = "authentication_error";
 export const USER_LOGOUT = "USER_LOGOUT";
-// admin
+// Admin
 export const FETCH_JOBS = "FECTH_JOBS";
-export const POST_NEW_GENERATOR_MODEL = "POST_NEW_GENERATOR_MODEL";
-// user
+export const POST_NEW_JOB = "POST_NEW_JOB";
+export const POST_NEW_GENERATOR_MODEL = "CREATE_NEW_GENERATOR_MODEL";
+// User
 export const CREATE_USER = "CREATE_USER";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
+export const UPDATE_USER = "UPDATE_USER";

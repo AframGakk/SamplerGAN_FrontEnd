@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Grid, Switch } from "@material-ui/core";
+import { Switch } from "@material-ui/core";
 import { Knob } from "react-rotary-knob";
 import * as skins from "react-rotary-knob-skin-pack";
 import "./EnvelopeComponent.css";
@@ -13,47 +13,23 @@ import {
 } from "../../../actions";
 
 class EnvelopeComponent extends React.Component {
-  /*constructor(props) {
-    super(props);
-    this.state = {
-      attackValue: 0,
-      checkedA: false
-    };
-    this.handleDoubleClick.bind(this);
-  }
-*/
-  // Getting attack knobs value and
-  // sending it into action creator
+  // Getting attack knobs value and sending it into action creator
   changeAttackValue(val) {
-    //console.log(val);
     this.props.attackValChanged(val);
   }
 
-  // Getting hold knobs value and
-  // sending it into action creator
+  // Getting hold knobs value and sending it into action creator
   changeHoldValue(val) {
-    //console.log(val);
     this.props.holdValChanged(val);
   }
-  // Getting decay knobs value and
-  // sending it into action creator
+  // Getting decay knobs value and sending it into action creator
   changeDecayValue(val) {
-    //console.log(val);
     this.props.decayValChanged(val);
   }
 
-  /*handleDoubleClick(label) {
-    if (label === "attack") {
-      this.setState({ attackValue: 0 });
-    }
-  }
-  */
-
-  // Getting envelope switch value and
-  // sending it into action creator
+  // Getting envelope switch value and sending it into action creator
   handleSwitch = event => {
     const val = event.target.checked;
-    //console.log(val);
     this.props.envelopesValChanged(val);
   };
 
@@ -109,8 +85,6 @@ class EnvelopeComponent extends React.Component {
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
   // the file that is selected in the Filetree
-  //console.log("Inside EnvelopeComp mapStateToProps");
-  //console.log(state);
   return { meta: state.selectedFileMetadata };
 };
 

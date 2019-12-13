@@ -13,16 +13,6 @@ import FilterComponent from "./FilterComponent/FilterComponent";
 import { updateMetadata, saveGeneratedSampleData } from "../../actions";
 
 class Sampler extends React.Component {
-  /*constructor(props) {
-    super(props);
-    this.state = {
-      name: ""
-    };
-  }*/
-  /*clicked() {
-    this.props.updateMetadata(this.props.meta.file_id, this.props.meta);
-  }
-*/
   render() {
     return (
       <Grid className={"sampler-container"} container spacing={3}>
@@ -42,12 +32,6 @@ class Sampler extends React.Component {
           </div>
         </Grid>
         <Grid item xs={5} className={"secondGrid"}>
-          {/*
-            Idea if no file loaded in the sampler,
-            then button should be disabled
-            would not want the user sending "empty"
-            patch req to the webapi
-            */}
           {/* Updates metadata with props from redux store*/}
           <Button
             variant="contained"
@@ -86,7 +70,6 @@ class Sampler extends React.Component {
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
   // the metadata for what file is selected
-  //console.log(state);
   return {
     meta: state.selectedFileMetadata,
     newfiledata: state.selectedFileSoundDataReducer.newFileData
@@ -97,10 +80,3 @@ export default connect(mapStateToProps, {
   updateMetadata: updateMetadata,
   saveGeneratedSampleData: saveGeneratedSampleData
 })(Sampler);
-
-/*            onClick={() =>
-              this.props.updateMetadata(
-                this.props.meta.file_id,
-                this.props.meta
-              )
-            } */

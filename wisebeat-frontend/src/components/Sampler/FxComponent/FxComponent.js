@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Grid, Switch } from "@material-ui/core";
+import { Switch } from "@material-ui/core";
 import { Knob } from "react-rotary-knob";
 import * as skins from "react-rotary-knob-skin-pack";
 import "./FxComponent.css";
@@ -12,26 +12,16 @@ import {
 } from "../../../actions";
 
 class FxComponent extends React.Component {
-  /*constructor(props) {
-    super(props);
-    this.state = {
-      checkedA: false
-    };
-  }
-*/
   changeReverbValue(val) {
-    //console.log(val);
     this.props.reverbValChanged(val);
   }
 
   changeDelayValue(val) {
-    //console.log(val);
     this.props.delayValChanged(val);
   }
 
   handleSwitch = event => {
     const val = event.target.checked;
-    //console.log(val);
     this.props.fxValChanged(val);
   };
 
@@ -76,8 +66,6 @@ class FxComponent extends React.Component {
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
   // the file that is selected in the Filetree
-  //console.log("Inside FXComp mapStateToProps");
-  //console.log(state);
   return { meta: state.selectedFileMetadata };
 };
 

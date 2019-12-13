@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import Container from "@material-ui/core/Container";
 
-class About extends React.Component {
+class User extends React.Component {
   render() {
     return (
-      <div>
+      <Container la>
         <h1>{localStorage.getItem("username")} HOMEPAGE</h1>
         <div className="signUpFormDiv">
           <h2 className="signUpFormHeader">User infomation</h2>
@@ -22,7 +23,6 @@ class About extends React.Component {
                 InputProps={{
                   style: {
                     color: "white",
-                    textAlign: "center",
                     border: "white"
                   }
                 }}
@@ -42,7 +42,6 @@ class About extends React.Component {
                 InputProps={{
                   style: {
                     color: "white",
-                    textAlign: "center",
                     border: "white"
                   }
                 }}
@@ -62,7 +61,6 @@ class About extends React.Component {
                 InputProps={{
                   style: {
                     color: "white",
-                    textAlign: "center",
                     border: "white"
                   }
                 }}
@@ -82,7 +80,6 @@ class About extends React.Component {
                 InputProps={{
                   style: {
                     color: "white",
-                    textAlign: "center",
                     border: "white"
                   }
                 }}
@@ -98,8 +95,7 @@ class About extends React.Component {
             size="large"
             style={{ margin: 10, width: "520px" }}
             onClick={() =>
-              this.props.createUser(
-                this.userNameRef.value,
+              this.props.updateUser(
                 this.firstNameRef.value,
                 this.lastNameRef.value,
                 this.passRef.value,
@@ -110,9 +106,9 @@ class About extends React.Component {
             Update
           </Button>
         </div>
-      </div>
+      </Container>
     );
   }
 }
 
-export default About;
+export default User;

@@ -13,39 +13,7 @@ class NavigationBar extends React.Component {
       return (
         <Typography>
           <Link
-            style={{ marginRight: 10, color: "white", cursor: "pointer" }}
-            color="primary"
-            underline="hover"
-            onClick={() => history.push("/studio")}
-          >
-            Studio
-          </Link>
-          <Link
-            style={{ marginRight: 10, color: "white", cursor: "pointer" }}
-            color="primary"
-            underline="hover"
-            onClick={() => history.push("/home")}
-          >
-            Home
-          </Link>
-          <Link
-            style={{ marginRight: 10, color: "white", cursor: "pointer" }}
-            color="primary"
-            underline="hover"
-            onClick={() => history.push("/about")}
-          >
-            About
-          </Link>
-          <Link
-            style={{ marginRight: 10, color: "white", cursor: "pointer" }}
-            color="primary"
-            underline="hover"
-            onClick={() => history.push("/contact")}
-          >
-            Contact
-          </Link>
-          <Link
-            style={{ marginRight: 50, color: "white", cursor: "pointer" }}
+            style={{ marginRight: 50 }}
             color="primary"
             underline="hover"
             onClick={() => this.props.logOut()}
@@ -55,42 +23,6 @@ class NavigationBar extends React.Component {
         </Typography>
       );
     }
-    return (
-      <Typography>
-        <Link
-          style={{ marginRight: 10, color: "white", cursor: "pointer" }}
-          color="primary"
-          underline="hover"
-          onClick={() => history.push("/login")}
-        >
-          Log In
-        </Link>
-        <Link
-          style={{ marginRight: 10, color: "white", cursor: "pointer" }}
-          color="primary"
-          underline="hover"
-          onClick={() => history.push("/")}
-        >
-          Sign Up
-        </Link>{" "}
-        <Link
-          style={{ marginRight: 10, color: "white", cursor: "pointer" }}
-          color="primary"
-          underline="hover"
-          onClick={() => history.push("/about")}
-        >
-          About
-        </Link>
-        <Link
-          style={{ marginRight: 10, color: "white", cursor: "pointer" }}
-          color="primary"
-          underline="hover"
-          onClick={() => history.push("/contact")}
-        >
-          Contact
-        </Link>
-      </Typography>
-    );
   }
 
   render() {
@@ -114,20 +46,9 @@ class NavigationBar extends React.Component {
 
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get auth user
-  console.log(state);
   return { authenticated: state.authReducer.authenticated };
 };
 
 export default connect(mapStateToProps, {
   logOut: logOut
 })(NavigationBar);
-
-/*
-
-<nav className="navbar navbar-expand-lg  navigation-bar">
-
-       <h1>LOGO</h1>
-       <button type="button" className="btn btn-default signup-button-navbar">Sign up</button>
-    </nav>
-
-*/
