@@ -27,9 +27,7 @@ class Sampler extends React.Component {
           <ControlerComponent />
         </Grid>
         <Grid item xs={5} className={"secondGrid"}>
-          <div className={"sampler-comp-wrapper"}>
-            <FxComponent />
-          </div>
+          <div className={"sampler-comp-wrapper"}></div>
         </Grid>
         <Grid item xs={5} className={"secondGrid"}></Grid>
         <Grid item xs={5} className={"secondGrid"}>
