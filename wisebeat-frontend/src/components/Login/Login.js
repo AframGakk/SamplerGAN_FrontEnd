@@ -6,12 +6,17 @@ import Container from "@material-ui/core/Container";
 
 import { signIn } from "../../actions";
 import { withStyles } from "@material-ui/core/styles";
-import "./Logis.css";
+import "./Login.css";
 import { fetchJobs } from "../../actions";
 
 const useStyles = theme => ({
   root: {
     width: "100%"
+},
+  login: {
+        marginTop: 50,
+        background: "#999999",
+        width: "590px"
   }
 });
 
@@ -22,7 +27,7 @@ class Login extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Container fixed>
+      <Container fixed className={classes.login}>
         <h2 className="logInFormHeader">Log In</h2>
         <form className={classes.root}>
           <div>
@@ -35,9 +40,7 @@ class Login extends React.Component {
               style={{ margin: 10, width: "520px" }}
               InputProps={{
                 style: {
-                  color: "white",
-                  textAlign: "center",
-                  border: "white"
+                  textAlign: "center"
                 }
               }}
               inputRef={ref => {
@@ -55,9 +58,7 @@ class Login extends React.Component {
               style={{ margin: 10, width: "520px" }}
               InputProps={{
                 style: {
-                  color: "white",
-                  textAlign: "center",
-                  border: "white"
+                  textAlign: "center"
                 }
               }}
               inputRef={ref => {

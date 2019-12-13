@@ -23,34 +23,6 @@ class NavigationBar extends React.Component {
         </Typography>
       );
     }
-    return (
-      <Typography>
-        <Link
-          style={{ marginRight: 10 }}
-          color="primary"
-          underline="hover"
-          onClick={() => history.push("/")}
-        >
-          Studio
-        </Link>
-        <Link
-          style={{ marginRight: 10 }}
-          color="primary"
-          underline="hover"
-          onClick={() => history.push("/about")}
-        >
-          About
-        </Link>
-        <Link
-          style={{ marginRight: 10 }}
-          color="primary"
-          underline="hover"
-          onClick={() => history.push("/contact")}
-        >
-          Contact
-        </Link>
-      </Typography>
-    );
   }
 
   render() {

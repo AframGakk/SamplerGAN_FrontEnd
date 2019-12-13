@@ -17,8 +17,6 @@ const App = () => {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Studio} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/contact" component={Contact} />
             <Route exact path="/admin" component={Login} />
             <Route exact path="/panel" component={Admin} />
           </Switch>
