@@ -1,4 +1,4 @@
-import { FETCH_JOBS, POST_NEW_JOB } from "../actions/types";
+import { FETCH_JOBS } from "../actions/types";
 
 export default (state = [], action) => {
   switch (action.type) {
@@ -6,9 +6,9 @@ export default (state = [], action) => {
     case FETCH_JOBS:
       return action.payload;
     // If the actiontype matches POST_NEW_JOB then return that payload
-    case POST_NEW_JOB:
+    /*case POST_NEW_JOB:
       return action.payload;
-    // if nothing matches return the state as before
+    // if nothing matches return the state as before*/
     default:
       return state;
   }

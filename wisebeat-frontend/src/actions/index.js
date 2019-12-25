@@ -349,6 +349,7 @@ export const updateUser = (
 // ADMIN
 // Fetch all jobs
 export const fetchJobs = () => async dispatch => {
+  console.log("Fetching");
   const response = await jobdata.get("/job", {
     headers: { Authorization: "asghwegalkjerhghoaier0439845!" }
   });
@@ -366,7 +367,8 @@ export const createJob = (
   _ep,
   _description
 ) => async dispatch => {
-  const response = await jobdata.post(
+  console.log("Posting new job");
+  const resp = await jobdata.post(
     "/job",
     {
       label: _label,
@@ -385,8 +387,6 @@ export const createJob = (
       headers: { Authorization: "asghwegalkjerhghoaier0439845!" }
     }
   );
-
-  dispatch({ type: POST_NEW_JOB, payload: response.data });
 };
 
 // Update model
