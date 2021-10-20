@@ -387,6 +387,8 @@ export const createJob = (
       headers: { Authorization: "asghwegalkjerhghoaier0439845!" }
     }
   );
+
+  //dispatch({ type: POST_NEW_JOB, payload: response.data });
 };
 
 // Update model
