@@ -6,8 +6,8 @@ export default (state = [], action) => {
     case FETCH_JOBS:
       return action.payload;
     // If the actiontype matches POST_NEW_JOB then return that payload
-    case POST_NEW_JOB:
-      return action.payload;
+    //case POST_NEW_JOB:
+     // return action.payload;
     // if nothing matches return the state as before
     default:
       return state;

@@ -386,7 +386,7 @@ export const createJob = (
     }
   );
 
-  dispatch({ type: POST_NEW_JOB, payload: response.data });
+  //dispatch({ type: POST_NEW_JOB, payload: response.data });
 };
 
 // Update model
