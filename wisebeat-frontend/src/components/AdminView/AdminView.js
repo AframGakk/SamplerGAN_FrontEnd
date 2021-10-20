@@ -308,7 +308,7 @@ class AdminView extends React.Component {
 const mapStateToProps = state => {
   // Configure connect to tell redux store that we wanna get
   // all the folders
-  console.log(state);
+  //console.log(state);
   return { jobs: state.jobReducer.data };
 };
 // connect to Provider -> ReduxStore

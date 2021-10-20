@@ -1,4 +1,4 @@
-import { FETCH_JOBS, POST_NEW_JOB } from "../actions/types";
+import { FETCH_JOBS } from "../actions/types";
 
 export default (state = [], action) => {
   switch (action.type) {
